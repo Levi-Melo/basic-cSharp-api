@@ -44,16 +44,17 @@ namespace basic_api.Infrastructure.Database.Context
                 }
                 else if (entityEntry.State == EntityState.Modified)
                 {
+                    var before = (IBaseEntity)entityEntry.OriginalValues;
                     if (audit != null)
                     {
-                        if (audit.updated_id != null)
+                        if (before.updated_id != null)
                         {
-                            audit.updated_id.Add(updateData.operationId);
+                            before.updated_id.Add(updateData.operationId);
+                            audit.updated_id = before.updated_id;
                         }
                         else
                         {
                             audit.updated_id = [updateData.operationId];
-
                         }
 
                         audit.updated_at = updateData.timestamp;
@@ -80,6 +81,7 @@ namespace basic_api.Infrastructure.Database.Context
             UpdateData updateData)
         {
             var deletable = (ISoftDeletable)entityEntry.Entity;
+            var before = (IBaseEntity)entityEntry.OriginalValues;
 
             if (deletable != null)
             {
@@ -93,15 +95,14 @@ namespace basic_api.Infrastructure.Database.Context
 
             if (audit != null)
             {
-                if (audit.updated_id != null)
+                if (before.deleted_id != null)
                 {
-                    audit.updated_id.Add(updateData.operationId);
-
+                    before.deleted_id.Add(updateData.operationId);
+                    audit.deleted_id = before.deleted_id;
                 }
                 else
                 {
-                    audit.updated_id = [updateData.operationId];
-
+                    audit.deleted_id = [updateData.operationId];
                 }
                 audit.deleted_at = updateData.timestamp;
             }
