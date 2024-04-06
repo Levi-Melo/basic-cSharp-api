@@ -6,15 +6,20 @@ namespace basic_api.Data.Repositories
         where T : IBaseEntity
         where G : T 
     {
-        IEnumerable<T> Find(IEnumerable<G> input);
+        T Get(G input);
 
-        T FindOne(T input);
+        IEnumerable<T> Get(IEnumerable<G> input);
+        
+        T Insert(T entity);
+        
+        IEnumerable<T> Insert(IEnumerable<T> entity);
 
-        T Insert(Guid id,G input);
+        T Update(G entity);
 
-        T Update(T input);
+        IEnumerable<T> Update(IEnumerable<G> input);
 
-        T Delete(Guid id);
+        void Delete(G entity);
+
+        public void Delete(IEnumerable<G> input);
     }
-
 }

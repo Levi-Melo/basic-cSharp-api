@@ -6,11 +6,11 @@
 
         DateTime created_at { get; set; }
 
-        Guid? updated_id { get; set; }
+        List<Guid>? updated_id { get; set; }
 
         DateTime? updated_at { get; set; }
 
-        Guid? deleted_id { get; set; }
+        List<Guid>? deleted_id { get; set; }
 
         DateTime? deleted_at { get; set; }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using basic_api.Infrastructure.Database.Context;
 using basic_api.Infrastructure.Database.Models;
+using System.Reflection;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
@@ -24,38 +25,141 @@ namespace basic_api.Infrastructure.Database.Repositories
             _dbSet = context.Set<T>();
 
         }
+
         public DbContext GetContext()
         {
             return _context;
         }
-        public T Delete(Guid id)
+
+        public IEnumerable<T> Get(IEnumerable<G> input)
         {
-            throw new NotImplementedException();
+            return
+               Get(true)
+               .Where(p => ContainsProperties(p, input))
+               .ToList();
         }
 
+        public T Get(G input)
+        {
+            return 
+                Get(true)
+                .Where(p => ContainsProperties(p, input))
+                .Single();
+        }
+
+        public T Insert(T entity)
+        {
+            _context.Set<T>().Add(entity);
+
+            return entity;
+        }
+
+
+        public IEnumerable<T> Insert(IEnumerable<T> input)
+        {
+            _context.Set<T>().AddRange(input);
+
+            return input;
+        }
+
+        public IEnumerable<T> Update(IEnumerable<G> input)
+
+        {
+            _context.Set<T>().UpdateRange(input);
+
+            return input;
+        }
+        public T Update(G entity)
+        {
+            _context.Set<T>().Update(entity);
+
+            return entity;
+        }
+
+        public void Delete(G input)
+        {
+            var entity = Get(input);
+            Delete(entity);
+        }
+
+        public void Delete(IEnumerable<G> input)
+        {
+            var entities = Get(input);
+            Delete(entities);
+        }
+        
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<T> Find(IEnumerable<G> input)
+        protected virtual void Dispose(bool disposing)
         {
-            throw new NotImplementedException();
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose();
+                    _context = null;
+                }
+            }
         }
 
-        public T FindOne(T input)
+        private bool ContainsProperties(T instance, G validationItem)
         {
-            throw new NotImplementedException();
+            var validationType = validationItem.GetType();
+
+            {
+                PropertyInfo[] validationProperties = validationType.GetProperties();
+
+                foreach (PropertyInfo property in validationProperties)
+                {
+                    var instanceValue = property.GetValue(instance);
+                    var validationValue = property.GetValue(validationItem);
+
+                    if (instanceValue == null && validationValue == null)
+                        continue;
+
+                    if (instanceValue == null || validationValue == null)
+                        return false;
+
+                    if (!instanceValue.Equals(validationValue))
+                        return false;
+                }
+            }
+
+            return true; // Se todas as propriedades forem iguais, retorna verdadeiro
         }
 
-        public T Insert(Guid id, G input)
+        private bool ContainsProperties(T instance, IEnumerable<G> validationItems)
         {
-            throw new NotImplementedException();
+            var results = 
+                validationItems
+                .Select(item => ContainsProperties(instance, item))
+                .ToArray();
+
+            return results.Contains(true);
         }
 
-        public T Update(T input)
+        private void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
+        }
+
+        private void Delete(IEnumerable<T> entity)
+        {
+            _dbSet.RemoveRange(entity);
+        }
+        private IQueryable<T> Get(bool track = true)
+        {
+            if (!track)
+            {
+                return _dbSet.AsNoTracking();
+            }
+
+            return _dbSet;
+
         }
     }
 }

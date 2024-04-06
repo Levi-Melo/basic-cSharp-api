@@ -1,4 +1,6 @@
-﻿namespace basic_api.Domain.Entities
+﻿using System.Reflection;
+
+namespace basic_api.Domain.Entities
 {
     public interface IBaseEntity : IAudit, ISoftDeletable
     {

@@ -12,14 +12,15 @@ namespace basic_api.Infrastructure.Database.Context
         {
             var updateData = new UpdateData
             {
-                timestamp = DateTime.Now
+                timestamp = DateTime.Now,
+                operationId = new Guid()
             };
 
             var entries = ChangeTracker
                .Entries()
                .Where(e =>
                {
-                   return e.Entity is IAudit &&
+                   return e.Entity is IBaseEntity &&
                     (
                         e.State == EntityState.Added ||
                         e.State == EntityState.Modified ||
@@ -29,20 +30,32 @@ namespace basic_api.Infrastructure.Database.Context
 
             foreach (var entityEntry in entries)
             {
-                var audit = (IAudit)entityEntry.Entity;
+                throw new NotImplementedException("ADD LOG MANAGEMENT");
+                var audit = (IBaseEntity)entityEntry.Entity;
 
                 if (entityEntry.State == EntityState.Added)
                 {
                     if (audit != null)
                     {
-                        audit.created_id = new Guid();
+                        audit.created_id = updateData.operationId;
                         audit.created_at = updateData.timestamp;
+                        audit.Id = updateData.operationId;
                     }
                 }
                 else if (entityEntry.State == EntityState.Modified)
                 {
                     if (audit != null)
                     {
+                        if (audit.updated_id != null)
+                        {
+                            audit.updated_id.Add(updateData.operationId);
+                        }
+                        else
+                        {
+                            audit.updated_id = [updateData.operationId];
+
+                        }
+
                         audit.updated_at = updateData.timestamp;
                     }
 
@@ -76,11 +89,20 @@ namespace basic_api.Infrastructure.Database.Context
                 SoftCascade(entityEntry, updateData);
             }
 
-            var audit = (IAudit)entityEntry.Entity;
+            var audit = (IBaseEntity)entityEntry.Entity;
 
             if (audit != null)
             {
-                audit.deleted_id = new Guid();
+                if (audit.updated_id != null)
+                {
+                    audit.updated_id.Add(updateData.operationId);
+
+                }
+                else
+                {
+                    audit.updated_id = [updateData.operationId];
+
+                }
                 audit.deleted_at = updateData.timestamp;
             }
         }
@@ -95,6 +117,7 @@ namespace basic_api.Infrastructure.Database.Context
         private struct UpdateData
         {
             public DateTime timestamp;
+            public Guid operationId;
         }
     }
 }
