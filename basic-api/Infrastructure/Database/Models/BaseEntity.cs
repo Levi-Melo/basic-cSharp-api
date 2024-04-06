@@ -2,7 +2,7 @@
 
 namespace basic_api.Infrastructure.Database.Models
 {
-    public class BaseEntity : IBaseEntity
+    public abstract class BaseEntity : IBaseEntity
     {
         // Base
         public Guid Id { get; set; }
