@@ -9,22 +9,15 @@ using System.Reflection;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class BaseRepository<T, G> : IBaseRepository<T, G>
+    public class BaseRepository<T, G>(DataContext context) : IBaseRepository<T, G>
         where T : BaseEntity
         where G : T
     {
 
-        protected DbSet<T> _dbSet;
+        protected DbSet<T> _dbSet = context.Set<T>();
 
 
-        private DataContext _context;
-
-        public BaseRepository(DataContext context)
-        {
-            _context = context;
-            _dbSet = context.Set<T>();
-
-        }
+        private DataContext _context = context;
 
         public DbContext GetContext()
         {

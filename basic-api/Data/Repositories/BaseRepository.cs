@@ -20,6 +20,6 @@ namespace basic_api.Data.Repositories
 
         void Delete(G entity);
 
-        public void Delete(IEnumerable<G> input);
+        void Delete(IEnumerable<G> input);
     }
 }
