@@ -4,7 +4,7 @@ using basic_api.Domain.Entities;
 
 namespace basic_api.Application.Base
 {
-    public class UpdateUseCase<T, G>(IBaseRepository<T, G> repo) :IUpdateUseCase<T, G>
+    public abstract class UpdateUseCase<T, G>(IBaseRepository<T, G> repo) :IUpdateUseCase<T, G>
     where T: IBaseEntity
     where G : T 
     {

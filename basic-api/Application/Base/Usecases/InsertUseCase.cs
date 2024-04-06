@@ -4,7 +4,7 @@ using basic_api.Domain.Entities;
 
 namespace basic_api.Application.Base
 {
-    public class InsertUseCase<T, G>(IBaseRepository<T, G> repo) : IInsertUseCase<T>
+    public abstract class InsertUseCase<T, G>(IBaseRepository<T, G> repo) : IInsertUseCase<T>
     where T : IBaseEntity
     where G : T
     {

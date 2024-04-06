@@ -4,7 +4,7 @@ using basic_api.Domain.Entities;
 
 namespace basic_api.Application.Base
 {
-    public class GetUseCase<T, G>(IBaseRepository<T, G> repo) : IGetUseCase<T, G>
+    public abstract class GetUseCase<T, G>(IBaseRepository<T, G> repo) : IGetUseCase<T, G>
     where T : IBaseEntity
     where G : T
     {

@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class BaseRepository<T, G>(DataContext context) : IBaseRepository<T, G>
+    public abstract class BaseRepository<T, G>(DataContext context) : IBaseRepository<T, G>
         where T : BaseEntity
         where G : T
     {

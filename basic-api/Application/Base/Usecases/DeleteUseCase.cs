@@ -4,7 +4,7 @@ using basic_api.Domain.Entities;
 
 namespace basic_api.Application.Base
 {
-    public class DeleteUseCase<T, G>(IBaseRepository<T, G> repo) : IDeleteUseCase<G>
+    public abstract class DeleteUseCase<T, G>(IBaseRepository<T, G> repo) : IDeleteUseCase<G>
     where T : IBaseEntity
     where G : T
     {
