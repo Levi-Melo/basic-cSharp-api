@@ -1,6 +1,6 @@
+using basic_api.Data.Entities.Base;
 using basic_api.Domain.Base.Controller;
 using basic_api.Domain.Base.Facade;
-using basic_api.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace basic_api.Controllers

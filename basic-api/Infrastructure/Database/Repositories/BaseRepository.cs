@@ -1,7 +1,4 @@
 ﻿using basic_api.Data.Repositories;
-using basic_api.Domain.Entities;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using basic_api.Infrastructure.Database.Context;
 using basic_api.Infrastructure.Database.Models;

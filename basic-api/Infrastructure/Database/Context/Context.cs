@@ -1,6 +1,6 @@
-﻿using basic_api.Domain.Entities;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using basic_api.Data.Entities.Base;
 
 namespace basic_api.Infrastructure.Database.Context
 {

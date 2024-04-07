@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace basic_api.Domain.Entities
+namespace basic_api.Data.Entities.Base
 {
     public interface IBaseEntity : IAudit, ISoftDeletable
     {

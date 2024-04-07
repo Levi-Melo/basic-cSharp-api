@@ -1,8 +1,8 @@
-﻿using basic_api.Domain.Entities;
+﻿using basic_api.Data.Entities.Base;
 
 namespace basic_api.Data.Repositories
 {
-    public interface IBaseRepository<T, G > : IDisposable 
+    public interface IBaseRepository<T, G> : IDisposable 
         where T : IBaseEntity
         where G : T 
     {

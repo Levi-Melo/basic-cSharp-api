@@ -1,7 +1,7 @@
+using basic_api.Data.Entities.Base;
 using basic_api.Data.Repositories;
 using basic_api.Domain.Base.Facade;
 using basic_api.Domain.Base.UseCases;
-using basic_api.Domain.Entities;
 
 namespace basic_api.Application.Base
 {

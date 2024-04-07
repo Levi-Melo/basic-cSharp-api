@@ -1,8 +1,8 @@
+using basic_api.Data.Entities.Base;
 using basic_api.Data.Repositories;
 using basic_api.Domain.Base.UseCases;
-using basic_api.Domain.Entities;
 
-namespace basic_api.Application.Base
+namespace basic_api.Application.Base.UseCase
 {
     public abstract class InsertUseCase<T, G>(IBaseRepository<T, G> repo) : IInsertUseCase<T>
     where T : IBaseEntity

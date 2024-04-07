@@ -1,4 +1,4 @@
-using basic_api.Domain.Entities;
+using basic_api.Data.Entities.Base;
 
 namespace basic_api.Domain.Base.Facade
 {

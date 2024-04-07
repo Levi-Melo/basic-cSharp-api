@@ -1,4 +1,4 @@
-﻿namespace basic_api.Domain.Entities
+﻿namespace basic_api.Data.Entities.Base
 {
     public interface ISoftDeletable
     {
