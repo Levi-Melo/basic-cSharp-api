@@ -2,7 +2,7 @@
 
 namespace basic_api.Data.Repositories
 {
-    public interface IBookRepository : IBaseRepository<BookModel, BookModel>
+    public interface IBookRepository : IBaseRepository<BookModel>
     {
     }
 }

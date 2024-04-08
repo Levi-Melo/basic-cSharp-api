@@ -1,11 +1,8 @@
 ﻿using basic_api.Data.Services;
-using basic_api.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace basic_api.Infrastructure.Service
 {

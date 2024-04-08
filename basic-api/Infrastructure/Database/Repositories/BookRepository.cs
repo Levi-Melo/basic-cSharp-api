@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class BookRepository(DataContext context) : BaseRepository<BookModel, BookModel>(context), IBookRepository
+    public class BookRepository(DataContext context) : BaseRepository<BookModel>(context), IBookRepository
     {
     }
 }

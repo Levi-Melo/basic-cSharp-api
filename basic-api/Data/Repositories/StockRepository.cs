@@ -2,7 +2,7 @@
 
 namespace basic_api.Data.Repositories
 {
-    public interface IStockRepository : IBaseRepository<Stock, Stock>
+    public interface IStockRepository : IBaseRepository<StockModel>
     {
     }
 }

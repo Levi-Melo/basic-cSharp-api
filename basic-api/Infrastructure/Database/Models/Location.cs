@@ -2,7 +2,7 @@
 
 namespace basic_api.Infrastructure.Database.Models;
 
-public class Location : BaseEntity, ILocation
+public class LocationModel : BaseEntity, ILocation
 { 
     public string name { get; set; }
 

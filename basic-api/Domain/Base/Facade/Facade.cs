@@ -2,24 +2,23 @@ using basic_api.Data.Entities.Base;
 
 namespace basic_api.Domain.Base.Facade
 {
-    public interface IFacade<T, G>
+    public interface IFacade<T>
     where T : IBaseEntity 
-    where G : T
     {
-        T Get(G input);
+        T Get(T input);
 
-        IEnumerable<T> Get(IEnumerable<G> input);
+        IEnumerable<T> Get(IEnumerable<T> input);
         
         T Insert(T entity);
         
         IEnumerable<T> Insert(IEnumerable<T> entity);
 
-        T Update(G entity);
+        T Update(T entity);
 
-        IEnumerable<T> Update(IEnumerable<G> input);
+        IEnumerable<T> Update(IEnumerable<T> input);
 
-        void Delete(G entity);
+        void Delete(T entity);
 
-        void Delete(IEnumerable<G> input);
+        void Delete(IEnumerable<T> input);
     }
 }

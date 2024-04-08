@@ -2,12 +2,11 @@ using basic_api.Data.Entities.Base;
 
 namespace basic_api.Domain.Base.UseCases
 {
-    public interface IUpdateUseCase<T, G>
+    public interface IUpdateUseCase<T>
     where T: IBaseEntity
-    where G : T 
     {
-        T Execute(G entity);
+        T Execute(T entity);
 
-        IEnumerable<T> Execute(IEnumerable<G> input);
+        IEnumerable<T> Execute(IEnumerable<T> input);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace basic_api.Data.Repositories
 {
-    public interface IGenreRepository : IBaseRepository<Genre, Genre>
+    public interface IGenreRepository : IBaseRepository<GenreModel>
     {
     }
 }

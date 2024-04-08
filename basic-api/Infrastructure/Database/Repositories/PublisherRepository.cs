@@ -4,7 +4,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class PublisherRepository(DataContext context) : BaseRepository<Publisher, Publisher>(context), IPublisherRepository
+    public class PublisherRepository(DataContext context) : BaseRepository<PublisherModel>(context), IPublisherRepository
     {
     }
 }

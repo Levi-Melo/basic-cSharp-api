@@ -5,20 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace basic_api.Controllers
 {
-    public abstract class Controller<T,G>(IFacade<T,G> facade) : ControllerBase, IController<T,G>
+    public abstract class Controller<T>(IFacade<T> facade) : ControllerBase, IController<T>
     where T : IBaseEntity
-    where G : T
     {
-        private IFacade<T,G> _facade = facade;
+        private IFacade<T> _facade = facade;
 
         [HttpGet(Name = "")]
-        public T Get(G input)
+        public T Get(T input)
         {
             return _facade.Get(input);
         }
 
         [HttpGet(Name = "")]
-        public IEnumerable<T> Get(IEnumerable<G> input)
+        public IEnumerable<T> Get(IEnumerable<T> input)
         {
             return _facade.Get(input);
         }
@@ -36,25 +35,25 @@ namespace basic_api.Controllers
         }
 
         [HttpPatch(Name = "")]
-        public T Update(G entity)
+        public T Update(T entity)
         {
             return _facade.Update(entity);
         }
 
         [HttpPatch(Name = "")]
-        public IEnumerable<T> Update(IEnumerable<G> input)
+        public IEnumerable<T> Update(IEnumerable<T> input)
         {
             return _facade.Update(input);
         }
 
         [HttpDelete(Name = "")]
-        public void Delete(G entity)
+        public void Delete(T entity)
         {
             _facade.Delete(entity);
         }
 
         [HttpDelete(Name = "")]
-        public void Delete(IEnumerable<G> input)
+        public void Delete(IEnumerable<T> input)
         {
             _facade.Delete(input);
         }

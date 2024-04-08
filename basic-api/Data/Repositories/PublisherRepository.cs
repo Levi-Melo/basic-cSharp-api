@@ -2,7 +2,7 @@
 
 namespace basic_api.Data.Repositories
 {
-    public interface IPublisherRepository : IBaseRepository<Publisher, Publisher>
+    public interface IPublisherRepository : IBaseRepository<PublisherModel>
     {
     }
 }

@@ -1,14 +1,13 @@
-using basic_api.Data.Entities.Base;
-using basic_api.Data.Repositories;
 using basic_api.Domain.Base.UseCases;
+using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Base.UseCase
 {
-    public abstract class InsertUseCase<T, G>(IBaseRepository<T, G> repo) : IInsertUseCase<T>
-    where T : IBaseEntity
-    where G : T
+    public abstract class InsertUseCase<T>(BaseRepository<T> repo) : IInsertUseCase<T>
+    where T : BaseEntity
     {
-        private IBaseRepository<T,G> _repository = repo;
+        private BaseRepository<T> _repository = repo;
 
         public T Execute(T input)
         {

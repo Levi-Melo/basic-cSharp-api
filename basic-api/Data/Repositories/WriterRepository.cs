@@ -3,7 +3,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Data.Repositories
 {
-    public interface IWriterRepository : IBaseRepository<Writer, Writer>
+    public interface IWriterRepository : IBaseRepository<WriterModel>
     {
     }
 }

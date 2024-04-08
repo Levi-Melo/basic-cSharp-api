@@ -6,9 +6,8 @@ using System.Reflection;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public abstract class BaseRepository<T, G>(DataContext context) : IBaseRepository<T, G>
+    public abstract class BaseRepository<T>(DataContext context) : IBaseRepository<T>
         where T : BaseEntity
-        where G : T
     {
 
         protected DbSet<T> _dbSet = context.Set<T>();
@@ -21,7 +20,7 @@ namespace basic_api.Infrastructure.Database.Repositories
             return _context;
         }
 
-        public IEnumerable<T> Get(IEnumerable<G> input)
+        public IEnumerable<T> Get(IEnumerable<T> input)
         {
             return
                Get(true)
@@ -29,7 +28,7 @@ namespace basic_api.Infrastructure.Database.Repositories
                .ToList();
         }
 
-        public T Get(G input)
+        public T Get(T input)
         {
             return 
                 Get(true)
@@ -52,30 +51,30 @@ namespace basic_api.Infrastructure.Database.Repositories
             return input;
         }
 
-        public IEnumerable<T> Update(IEnumerable<G> input)
+        public IEnumerable<T> Update(IEnumerable<T> input)
 
         {
             _context.Set<T>().UpdateRange(input);
 
             return input;
         }
-        public T Update(G entity)
+        public T Update(T entity)
         {
             _context.Set<T>().Update(entity);
 
             return entity;
         }
 
-        public void Delete(G input)
+        public void Delete(T input)
         {
             var entity = Get(input);
-            Delete(entity);
+            Remove(entity);
         }
 
-        public void Delete(IEnumerable<G> input)
+        public void Delete(IEnumerable<T> input)
         {
             var entities = Get(input);
-            Delete(entities);
+            Remove(entities);
         }
         
         public void Dispose()
@@ -96,7 +95,7 @@ namespace basic_api.Infrastructure.Database.Repositories
             }
         }
 
-        private bool ContainsProperties(T instance, G validationItem)
+        private bool ContainsProperties(T instance, T validationItem)
         {
             var validationType = validationItem.GetType();
 
@@ -122,7 +121,7 @@ namespace basic_api.Infrastructure.Database.Repositories
             return true; // Se todas as propriedades forem iguais, retorna verdadeiro
         }
 
-        private bool ContainsProperties(T instance, IEnumerable<G> validationItems)
+        private bool ContainsProperties(T instance, IEnumerable<T> validationItems)
         {
             var results = 
                 validationItems
@@ -132,15 +131,16 @@ namespace basic_api.Infrastructure.Database.Repositories
             return results.Contains(true);
         }
 
-        private void Delete(T entity)
+        private void Remove(T entity)
         {
             _dbSet.Remove(entity);
         }
 
-        private void Delete(IEnumerable<T> entity)
+        private void Remove(IEnumerable<T> entity)
         {
             _dbSet.RemoveRange(entity);
         }
+
         private IQueryable<T> Get(bool track = true)
         {
             if (!track)

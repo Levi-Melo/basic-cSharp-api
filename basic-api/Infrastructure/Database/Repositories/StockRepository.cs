@@ -4,7 +4,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class StockRepository(DataContext context) : BaseRepository<Stock, Stock>(context), IStockRepository
+    public class StockRepository(DataContext context) : BaseRepository<StockModel>(context), IStockRepository
     {
     }
 }

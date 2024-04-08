@@ -2,7 +2,7 @@
 
 namespace basic_api.Infrastructure.Database.Models
 {
-    public class Writer : BaseEntity, IWriter
+    public class WriterModel : BaseEntity, IWriter
     {
         public string name { get; set; }
 

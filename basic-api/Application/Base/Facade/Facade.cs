@@ -1,40 +1,38 @@
-using basic_api.Data.Entities.Base;
-using basic_api.Data.Repositories;
+using basic_api.Application.Base.UseCase;
 using basic_api.Domain.Base.Facade;
-using basic_api.Domain.Base.UseCases;
+using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Application.Base
 {
-    public abstract class Facade<T, G>(
-        IGetUseCase<T, G> getUseCase,
-        IDeleteUseCase<G> deleteUseCase,
-        IInsertUseCase<T> insertUseCase,
-        IUpdateUseCase<T, G> updateUseCase
-        ) : IFacade<T, G>
-    where T : IBaseEntity
-    where G : T
+    public abstract class Facade<T>(
+        GetUseCase<T> getUseCase,
+        DeleteUseCase<T> deleteUseCase,
+        InsertUseCase<T> insertUseCase,
+        UpdateUseCase<T> updateUseCase
+        ) : IFacade<T>
+    where T : BaseEntity
 {
-    IGetUseCase<T,G> _getUseCase = getUseCase;
-    IDeleteUseCase<G> _deleteUseCase = deleteUseCase;
-    IInsertUseCase<T> _insertUseCase = insertUseCase;
-    IUpdateUseCase<T,G> _updateUseCase = updateUseCase;
+        readonly GetUseCase<T> _getUseCase = getUseCase;
+        readonly DeleteUseCase<T> _deleteUseCase = deleteUseCase;
+        readonly InsertUseCase<T> _insertUseCase = insertUseCase;
+        readonly UpdateUseCase<T> _updateUseCase = updateUseCase;
 
-        public void Delete(G entity)
+        public void Delete(T entity)
         {
             _deleteUseCase.Execute(entity);
         }
 
-        public void Delete(IEnumerable<G> input)
+        public void Delete(IEnumerable<T> input)
         {
             _deleteUseCase.Execute(input);
         }
 
-        public T Get(G input)
+        public T Get(T input)
         {
             return _getUseCase.Execute(input);
         }
 
-        public IEnumerable<T> Get(IEnumerable<G> input)
+        public IEnumerable<T> Get(IEnumerable<T> input)
         {
             return _getUseCase.Execute(input);
         }
@@ -49,12 +47,12 @@ namespace basic_api.Application.Base
             return _insertUseCase.Execute(entity);
         }
 
-        public T Update(G entity)
+        public T Update(T entity)
         {
             return _updateUseCase.Execute(entity);
         }
 
-        public IEnumerable<T> Update(IEnumerable<G> input)
+        public IEnumerable<T> Update(IEnumerable<T> input)
         {
             return _updateUseCase.Execute(input);
         }

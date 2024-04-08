@@ -5,18 +5,17 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Base.UseCase
 {
-    public abstract class GetUseCase<T, G>(BaseRepository<T, G> repo) : IGetUseCase<T, G>
+    public abstract class GetUseCase<T>(BaseRepository<T> repo) : IGetUseCase<T>
     where T : BaseEntity
-    where G : T
     {
-        private IBaseRepository<T,G> _repository = repo;
+        private BaseRepository<T> _repository = repo;
 
-        public T Execute(G input)
+        public T Execute(T input)
         {
            return _repository.Get(input);
         }
 
-        public IEnumerable<T> Execute(IEnumerable<G> input)
+        public IEnumerable<T> Execute(IEnumerable<T> input)
         {
            return _repository.Get(input);
         }

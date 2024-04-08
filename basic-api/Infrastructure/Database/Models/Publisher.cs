@@ -2,7 +2,7 @@
 
 namespace basic_api.Infrastructure.Database.Models
 {
-    public class Publisher : BaseEntity, IPublisher
+    public class PublisherModel : BaseEntity, IPublisher
     {
         public string name { get; set; }
 

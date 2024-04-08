@@ -2,7 +2,7 @@
 
 namespace basic_api.Data.Repositories
 {
-    public interface ILocationRepository : IBaseRepository<Location, Location>
+    public interface ILocationRepository : IBaseRepository<LocationModel>
     {
     }
 }

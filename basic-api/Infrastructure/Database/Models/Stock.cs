@@ -2,7 +2,7 @@
 
 namespace basic_api.Infrastructure.Database.Models
 {
-    public class Stock : BaseEntity, IStock 
+    public class StockModel : BaseEntity, IStock 
     {
         public IBook item { get; set; }
            
