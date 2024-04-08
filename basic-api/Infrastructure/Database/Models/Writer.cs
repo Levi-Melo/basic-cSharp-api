@@ -4,16 +4,16 @@ namespace basic_api.Infrastructure.Database.Models
 {
     public class WriterModel : BaseEntity, IWriter
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string description { get; set; }
+        public string Description { get; set; }
 
-        public IEnumerable<IBook> books { get; set; }
+        public IEnumerable<IBook> Books { get; set; }
 
-        public IEnumerable<string> genres { get; set; }
+        public IEnumerable<string> Genres { get; set; }
 
-        public string nation { get; set; }
+        public string Nation { get; set; }
 
-        public bool isTranslator { get; set; }
+        public bool IsTranslator { get; set; }
     }
 }

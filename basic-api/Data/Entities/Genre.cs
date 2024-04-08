@@ -4,8 +4,10 @@ namespace basic_api.Data.Entities
 {
     public interface IGenre : IBaseEntity
     {
-        string name { get; set; }
+        string Name { get; set; }
 
-        string description { get; set; }
+        string Description { get; set; }
+     
+        IEnumerable<IBook> Books { get; set; }
     }
 }

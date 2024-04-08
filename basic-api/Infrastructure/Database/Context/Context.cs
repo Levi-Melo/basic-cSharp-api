@@ -37,8 +37,8 @@ namespace basic_api.Infrastructure.Database.Context
                 {
                     if (audit != null)
                     {
-                        audit.created_id = updateData.operationId;
-                        audit.created_at = updateData.timestamp;
+                        audit.Created_id = updateData.operationId;
+                        audit.Created_at = updateData.timestamp;
                         audit.Id = updateData.operationId;
                     }
                 }
@@ -47,22 +47,22 @@ namespace basic_api.Infrastructure.Database.Context
                     var before = (IBaseEntity)entityEntry.OriginalValues;
                     if (audit != null)
                     {
-                        if (before.updated_id != null)
+                        if (before.Updated_id != null)
                         {
-                            before.updated_id.Add(updateData.operationId);
-                            audit.updated_id = before.updated_id;
+                            before.Updated_id.Add(updateData.operationId);
+                            audit.Updated_id = before.Updated_id;
                         }
                         else
                         {
-                            audit.updated_id = [updateData.operationId];
+                            audit.Updated_id = [updateData.operationId];
                         }
 
-                        audit.updated_at = updateData.timestamp;
+                        audit.Updated_at = updateData.timestamp;
                     }
 
                     var deletable = (ISoftDeletable)entityEntry.Entity;
 
-                    if (deletable != null && deletable.deleted)
+                    if (deletable != null && deletable.Deleted)
                     {
                         SoftDelete(entityEntry, updateData);
                     }
@@ -86,7 +86,7 @@ namespace basic_api.Infrastructure.Database.Context
             if (deletable != null)
             {
                 entityEntry.State = EntityState.Unchanged;
-                deletable.deleted = true;
+                deletable.Deleted = true;
 
                 SoftCascade(entityEntry, updateData);
             }
@@ -95,16 +95,16 @@ namespace basic_api.Infrastructure.Database.Context
 
             if (audit != null)
             {
-                if (before.deleted_id != null)
+                if (before.Deleted_id != null)
                 {
-                    before.deleted_id.Add(updateData.operationId);
-                    audit.deleted_id = before.deleted_id;
+                    before.Deleted_id.Add(updateData.operationId);
+                    audit.Deleted_id = before.Deleted_id;
                 }
                 else
                 {
-                    audit.deleted_id = [updateData.operationId];
+                    audit.Deleted_id = [updateData.operationId];
                 }
-                audit.deleted_at = updateData.timestamp;
+                audit.Deleted_at = updateData.timestamp;
             }
         }
 

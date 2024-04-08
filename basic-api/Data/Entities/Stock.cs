@@ -4,10 +4,10 @@ namespace basic_api.Data.Entities
 {
     public interface IStock : IBaseEntity
     {
-        IBook item { get; set; }
+        IBook Item { get; set; }
            
-        ILocation? location { get; set; }
+        ILocation? Location { get; set; }
 
-        bool reserved { get; set; }
+        bool Reserved { get; set; }
     }
 }

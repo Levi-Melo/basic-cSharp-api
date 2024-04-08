@@ -2,12 +2,10 @@
 
 namespace basic_api.Infrastructure.Database.Models
 {
-    public class StockModel : BaseEntity, IStock 
+    public class StockModel : BaseEntity, IStock
     {
-        public IBook item { get; set; }
-           
-        public ILocation? location { get; set; }
-
-        public bool reserved { get; set; }
+        public IBook Item { get; set; }
+        public ILocation? Location { get; set; }
+        public bool Reserved { get; set; }
     }
 }

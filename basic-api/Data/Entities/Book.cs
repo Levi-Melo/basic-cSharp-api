@@ -4,30 +4,30 @@ namespace basic_api.Data.Entities
 {
     public interface IBook : IBaseEntity
     {
-        string title { get; set; }
+        string Title { get; set; }
 
-        string synopsis { get; set; }
+        string Synopsis { get; set; }
 
-        IEnumerable<IGenre> genres { get; set; }
+        IEnumerable<IGenre> Genres { get; set; }
 
-        int pages { get; set; }
+        int Pages { get; set; }
 
-        string? ilustrator { get; set; }
+        string? Ilustrator { get; set; }
 
-        IPublisher publisher { get; set; }
+        IPublisher Publisher { get; set; }
 
-        string stamp { get; set; }
+        string Stamp { get; set; }
 
-        DateTime published_at { get; set; }
+        DateTime PublishedAt { get; set; }
 
-        bool? vocabulary { get; set; }
+        bool? Vocabulary { get; set; }
 
-        int edition { get; set; }
+        int Edition { get; set; }
 
-        IEnumerable<IWriter> author { get; set; }
+        IEnumerable<IWriter> Author { get; set; }
 
-        IEnumerable<IWriter> reviewer { get; set; }
+        IEnumerable<IWriter> Reviewer { get; set; }
 
-        IWriter? translator { get; set; }
+        IWriter? Translator { get; set; }
     }
 }

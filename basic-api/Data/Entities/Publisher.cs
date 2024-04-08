@@ -4,23 +4,23 @@ namespace basic_api.Data.Entities
 {
     public interface IPublisher : IBaseEntity
     {
-        string name { get; set; }
+        string Name { get; set; }
 
-        IEnumerable<IBook> books { get; set; }
+        IEnumerable<IBook> Books { get; set; }
 
-        string document { get; set; }
+        string Document { get; set; }
 
-        IAddress address { get; set; }
+        IAddress Address { get; set; }
     }
 
-    public struct IAddress
+    public interface IAddress
     {
-        string postalCode { get; set; }
+        string PostalCode { get; set; }
 
-        int number { get; set; }
+        int Number { get; set; }
 
-        string street { get; set; }
+        string Street { get; set; }
 
-        string district { get; set; }
+        string District { get; set; }
     }
 }

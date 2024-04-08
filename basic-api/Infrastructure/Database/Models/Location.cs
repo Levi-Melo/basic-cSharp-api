@@ -4,9 +4,9 @@ namespace basic_api.Infrastructure.Database.Models;
 
 public class LocationModel : BaseEntity, ILocation
 { 
-    public string name { get; set; }
+    public string Name { get; set; }
 
-    public object metadata { get; set; }
+    public object Metadata { get; set; }
 
-    public IEnumerable<IBook> books { get; set; }
+    public IEnumerable<IBook> Books { get; set; }
 }

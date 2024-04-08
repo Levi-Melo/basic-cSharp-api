@@ -4,17 +4,17 @@ namespace basic_api.Data.Entities
 {
     public interface IWriter : IBaseEntity
     {
-        string name { get; set; }
+        string Name { get; set; }
 
-        string description { get; set; }
+        string Description { get; set; }
 
-        IEnumerable<IBook> books { get; set; }
+        IEnumerable<IBook> Books { get; set; }
 
-        IEnumerable<string> genres { get; set; }
+        IEnumerable<string> Genres { get; set; }
 
-        string nation { get; set; }
+        string Nation { get; set; }
 
-        bool isTranslator { get; set; }
+        bool IsTranslator { get; set; }
 
     }
 }

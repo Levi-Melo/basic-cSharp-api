@@ -4,10 +4,10 @@ namespace basic_api.Data.Entities
 {
     public interface ILocation: IBaseEntity 
     { 
-        string name { get; set; }
+        string Name { get; set; }
 
-        object metadata { get; set; }
+        object Metadata { get; set; }
 
-        IEnumerable<IBook> books { get; set; }
+        IEnumerable<IBook> Books { get; set; }
     }
 }

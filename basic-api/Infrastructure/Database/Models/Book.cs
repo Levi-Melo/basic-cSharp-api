@@ -4,32 +4,32 @@ namespace basic_api.Infrastructure.Database.Models
 {
     public class BookModel : BaseEntity, IBook
     {
-        public string title { get; set; }
+        public string Title { get; set; }
 
-        public string synopsis { get; set; }
+        public string Synopsis { get; set; }
 
-        public int pages { get; set; }
+        public int Pages { get; set; }
 
-        public string? ilustrator { get; set; }
+        public string? Ilustrator { get; set; }
 
-        public IPublisher publisher { get; set; }
+        public IPublisher Publisher { get; set; }
 
-        public string stamp { get; set; }
+        public string Stamp { get; set; }
 
-        public DateTime published_at { get; set; }
+        public DateTime PublishedAt { get; set; }
 
-        public bool? vocabulary { get; set; }
+        public bool? Vocabulary { get; set; }
 
-        public int edition { get; set; }
+        public int Edition { get; set; }
 
-        public string? material { get; set; }
+        public string? Material { get; set; }
 
-        public IEnumerable<IWriter> author { get; set; }
+        public IEnumerable<IWriter> Author { get; set; }
 
-        public IEnumerable<IWriter> reviewer { get; set; }
+        public IEnumerable<IWriter> Reviewer { get; set; }
 
-        public IWriter? translator { get; set; }
+        public IWriter? Translator { get; set; }
         
-        public IEnumerable<IGenre> genres { get; set; }
+        public IEnumerable<IGenre> Genres { get; set; }
     }
 }

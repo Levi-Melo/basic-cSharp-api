@@ -2,6 +2,6 @@
 {
     public interface ISoftDeletable
     {
-        bool deleted { get; set; }
+        bool Deleted { get; set; }
     }
 }

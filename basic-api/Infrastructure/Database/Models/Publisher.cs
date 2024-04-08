@@ -4,12 +4,12 @@ namespace basic_api.Infrastructure.Database.Models
 {
     public class PublisherModel : BaseEntity, IPublisher
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public IEnumerable<IBook> books { get; set; }
+        public IEnumerable<IBook> Books { get; set; }
 
-        public string document { get; set; }
+        public string Document { get; set; }
 
-        public IAddress address { get; set; }
+        public IAddress Address { get; set; }
     }
 }

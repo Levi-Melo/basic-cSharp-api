@@ -9,14 +9,14 @@ namespace basic_api.Infrastructure.Database.Models
         public Guid TenantId { get; set; }
         
         // Audit
-        public DateTime created_at { get; set; }
-        public DateTime? updated_at { get; set; }
-        public DateTime? deleted_at { get; set; }
-        public List<Guid>? updated_id { get; set; }
-        public Guid created_id { get; set; }
-        public List<Guid>? deleted_id { get; set; }
+        public DateTime Created_at { get; set; }
+        public DateTime? Updated_at { get; set; }
+        public DateTime? Deleted_at { get; set; }
+        public List<Guid>? Updated_id { get; set; }
+        public Guid Created_id { get; set; }
+        public List<Guid>? Deleted_id { get; set; }
         
         // SoftDeletable
-        public bool deleted { get; set; }
+        public bool Deleted { get; set; }
     }
 }
