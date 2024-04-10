@@ -3,7 +3,7 @@ using basic_api.Infrastructure.Database.Repositories;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Domain.Stock.UseCases;
 using basic_api.Application.Book.UseCases;
-using basic_api.Infrastructure.Service;
+using basic_api.Infrastructure.Services;
 
 namespace basic_api.Application.Stock.UseCases
 {

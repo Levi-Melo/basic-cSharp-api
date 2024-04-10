@@ -2,7 +2,7 @@
 using basic_api.Domain.Account.UseCases;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Infrastructure.Database.Repositories;
-using basic_api.Infrastructure.Service;
+using basic_api.Infrastructure.Services;
 using basic_api.Data.Entities.Enum;
 
 namespace basic_api.Application.Account.UseCases
