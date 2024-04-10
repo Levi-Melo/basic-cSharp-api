@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using basic_api.Infrastructure.Database.Models;
+using System.Reflection;
 
 namespace basic_api.Data.Entities.Base
 {
@@ -6,6 +7,6 @@ namespace basic_api.Data.Entities.Base
     {
         Guid Id { get; set; }
 
-        Guid TenantId { get; set; }
+        TenantModel Tenant { get; set; }
     }
 }

@@ -4,8 +4,8 @@ namespace basic_api.Infrastructure.Database.Models
 {
     public class StockModel : BaseEntity, IStock
     {
-        public IBook Item { get; set; }
-        public ILocation? Location { get; set; }
+        public BookModel Item { get; set; }
+        public LocationModel? Location { get; set; }
         public bool Reserved { get; set; }
     }
 }

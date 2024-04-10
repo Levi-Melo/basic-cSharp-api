@@ -1,4 +1,6 @@
 ﻿using basic_api.Data.Entities.Base;
+using basic_api.Infrastructure.Database.Models;
+using System;
 
 namespace basic_api.Data.Entities
 {
@@ -8,13 +10,13 @@ namespace basic_api.Data.Entities
 
         string Synopsis { get; set; }
 
-        IEnumerable<IGenre> Genres { get; set; }
+        IEnumerable<GenreModel> Genres { get; set; }
 
         int Pages { get; set; }
 
-        string? Ilustrator { get; set; }
+        WriterModel? Ilustrator { get; set; }
 
-        IPublisher Publisher { get; set; }
+        PublisherModel Publisher { get; set; }
 
         string Stamp { get; set; }
 
@@ -22,12 +24,14 @@ namespace basic_api.Data.Entities
 
         bool? Vocabulary { get; set; }
 
+        string? File { get; set; }
+
         int Edition { get; set; }
 
-        IEnumerable<IWriter> Author { get; set; }
+        IEnumerable<WriterModel> Author { get; set; }
 
-        IEnumerable<IWriter> Reviewer { get; set; }
+        IEnumerable<WriterModel> Reviewer { get; set; }
 
-        IWriter? Translator { get; set; }
+        WriterModel? Translator { get; set; }
     }
 }

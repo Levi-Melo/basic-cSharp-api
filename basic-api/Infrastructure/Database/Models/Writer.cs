@@ -8,9 +8,9 @@ namespace basic_api.Infrastructure.Database.Models
 
         public string Description { get; set; }
 
-        public IEnumerable<IBook> Books { get; set; }
+        public IEnumerable<BookModel> Books { get; set; }
 
-        public IEnumerable<string> Genres { get; set; }
+        public IEnumerable<GenreModel> Genres { get; set; }
 
         public string Nation { get; set; }
 

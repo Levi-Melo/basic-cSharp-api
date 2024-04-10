@@ -10,9 +10,9 @@ namespace basic_api.Infrastructure.Database.Models
 
         public int Pages { get; set; }
 
-        public string? Ilustrator { get; set; }
+        public WriterModel? Ilustrator { get; set; }
 
-        public IPublisher Publisher { get; set; }
+        public PublisherModel Publisher { get; set; }
 
         public string Stamp { get; set; }
 
@@ -24,12 +24,14 @@ namespace basic_api.Infrastructure.Database.Models
 
         public string? Material { get; set; }
 
-        public IEnumerable<IWriter> Author { get; set; }
+        public IEnumerable<WriterModel> Author { get; set; }
 
-        public IEnumerable<IWriter> Reviewer { get; set; }
+        public IEnumerable<WriterModel> Reviewer { get; set; }
 
-        public IWriter? Translator { get; set; }
+        public WriterModel? Translator { get; set; }
         
-        public IEnumerable<IGenre> Genres { get; set; }
+        public IEnumerable<GenreModel> Genres { get; set; }
+
+        public string? File { get; set; }
     }
 }

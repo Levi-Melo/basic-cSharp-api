@@ -1,4 +1,5 @@
-﻿using basic_api.Data.Entities.Base;
+﻿using basic_api.Data.Entities;
+using basic_api.Data.Entities.Base;
 
 namespace basic_api.Infrastructure.Database.Models
 {
@@ -6,7 +7,7 @@ namespace basic_api.Infrastructure.Database.Models
     {
         // Base
         public Guid Id { get; set; }
-        public Guid TenantId { get; set; }
+        public TenantModel Tenant { get; set; }
         
         // Audit
         public DateTime Created_at { get; set; }

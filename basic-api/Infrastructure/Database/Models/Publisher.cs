@@ -6,7 +6,7 @@ namespace basic_api.Infrastructure.Database.Models
     {
         public string Name { get; set; }
 
-        public IEnumerable<IBook> Books { get; set; }
+        public IEnumerable<BookModel> Books { get; set; }
 
         public string Document { get; set; }
 
