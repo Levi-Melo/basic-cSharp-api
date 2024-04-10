@@ -5,5 +5,8 @@ namespace basic_api.Domain.Stock.UseCases
 {
     public interface IStockInsertUseCase : IInsertUseCase<StockModel>
     {
+        new Task<StockModel> Execute(StockModel input);
+
+        new Task<IEnumerable<StockModel>> Execute(IEnumerable<StockModel> input);
     }
 }

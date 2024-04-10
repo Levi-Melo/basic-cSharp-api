@@ -4,7 +4,7 @@ namespace basic_api.Data.Services
     {
         Task<bool> UploadAsync(string fileName, byte[] buffer);
 
-        Task<byte[]> DownloadAsync(string fileName, byte[] buffer);
+        Task<byte[]> DownloadAsync(string fileName);
 
     }
 }

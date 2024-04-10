@@ -8,8 +8,14 @@ namespace basic_api.Data.Entities
         IEnumerable<BookModel> Books { get; set; }
 
         bool? Accept { get; set; }
-        
+
+        IEnumerable<StockModel> StockBooks { get; set; }
+
+        DateTime? DevolveAt { get; set; }
+
         IEnumerable<BookModel> InvalidBooks { get; set; }
+
+        bool? Devolved { get; set; }
 
         AccountModel OrderAuthor { get; set; }
     }

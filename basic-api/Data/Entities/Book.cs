@@ -24,8 +24,6 @@ namespace basic_api.Data.Entities
 
         bool? Vocabulary { get; set; }
 
-        string? File { get; set; }
-
         int Edition { get; set; }
 
         IEnumerable<WriterModel> Author { get; set; }

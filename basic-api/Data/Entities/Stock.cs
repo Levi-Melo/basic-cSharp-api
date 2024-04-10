@@ -10,5 +10,9 @@ namespace basic_api.Data.Entities
         LocationModel? Location { get; set; }
 
         bool Reserved { get; set; }
+
+        byte[]? File { get; set; }
+
+        bool HaveFile { get; set; }
     }
 }
