@@ -10,8 +10,13 @@ namespace basic_api.Infrastructure.Database.Models
 
         public IEnumerable<BookModel> InvalidBooks { get; set; }
 
+        public IEnumerable<StockModel> StockBooks { get; set; }
+
+        public DateTime? DevolveAt{ get; set; }
+
+        public bool? Devolved{ get; set; }
+
         public AccountModel OrderAuthor { get; set; }
 
-        public IEnumerable<LocationModel> Locations { get; set; }
     }
 }
