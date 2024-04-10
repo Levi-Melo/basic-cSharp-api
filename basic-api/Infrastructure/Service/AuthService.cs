@@ -9,8 +9,8 @@ namespace basic_api.Infrastructure.Service
     public class AuthService<T>(IConfiguration config, int minutes) : IAuthService<T>
         where T : struct
     {
-        IConfiguration _config = config;
-        int _minutes = minutes;
+        readonly IConfiguration _config = config;
+        readonly int _minutes = minutes;
 
         public string SignIn(T content)
         {
@@ -45,11 +45,10 @@ namespace basic_api.Infrastructure.Service
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = GetValidationParameters();
             var readToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            SecurityToken validatedToken;
 
-            var result = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
+            var result = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
-            T payload = new T();
+            T payload = new();
             var properties = typeof(T).GetProperties();
             foreach (var claim in readToken.Claims)
             {

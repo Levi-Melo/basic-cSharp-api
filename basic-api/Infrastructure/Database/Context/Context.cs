@@ -4,10 +4,8 @@ using basic_api.Data.Entities.Base;
 
 namespace basic_api.Infrastructure.Database.Context
 {
-    public class Context : DbContext
+    public class Context(DbContextOptions options) : DbContext(options)
     {
-        public Context(DbContextOptions options) : base(options) { }
-
         public override int SaveChanges()
         {
             var updateData = new UpdateData
