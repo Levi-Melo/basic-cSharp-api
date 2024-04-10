@@ -7,7 +7,7 @@ namespace basic_api.Application.Account.UseCases
 {
     public class AccountUpdateUseCase(AccountRepository repo) : UpdateUseCase<AccountModel>(repo), IAccountUpdateUseCase
     {
-        public AccountModel Execute(AccountModel input)
+        new public AccountModel Execute(AccountModel input)
         {
             if(input.Password != null)
             {
@@ -17,7 +17,7 @@ namespace basic_api.Application.Account.UseCases
             return base.Execute(input);
         }
 
-        public IEnumerable<AccountModel> Execute(IEnumerable<AccountModel> input)
+        new  public IEnumerable<AccountModel> Execute(IEnumerable<AccountModel> input)
         {
 
             foreach (var item in input)

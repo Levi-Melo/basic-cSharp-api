@@ -14,7 +14,11 @@ namespace basic_api.Application.Account.UseCases
         private readonly AuthService<AuthPayload> _authService = authService;
         public string Execute(string email, string password)
         {
-            var search = new AccountModel() { Email = email };
+            var search = new AccountModel() 
+            { 
+                Email = email,
+                Deleted = false
+            };
             var user = _repo.Get(search);
 
             bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.Password);

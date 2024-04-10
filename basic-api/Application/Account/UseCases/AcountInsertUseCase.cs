@@ -8,13 +8,13 @@ namespace basic_api.Application.Account.UseCases
 {
     public class AccountInsertUseCase(AccountRepository repo) : InsertUseCase<AccountModel>(repo), IAccountInsertUseCase
     {
-        public AccountModel Execute(AccountModel input)
+        new public AccountModel Execute(AccountModel input)
         {
             input.Password = BCrypt.Net.BCrypt.HashPassword(input.Password);
             return base.Execute(input);
         }
 
-        public IEnumerable<AccountModel> Execute(IEnumerable<AccountModel> input) { 
+        new public IEnumerable<AccountModel> Execute(IEnumerable<AccountModel> input) { 
 
             foreach(var item in input){
                 item.Password = BCrypt.Net.BCrypt.HashPassword(item.Password);
