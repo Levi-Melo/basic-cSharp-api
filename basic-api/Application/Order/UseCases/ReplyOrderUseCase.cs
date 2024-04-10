@@ -1,36 +1,40 @@
 ﻿using basic_api.Application.Stock.UseCases;
 using basic_api.Domain.Order.UseCases;
+using basic_api.Domain.Stock.UseCases;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class ReplyOrderUseCase(OrderRepository repo, StockGetUseCase getStock, OrderGetUseCase getOrder) : IReplyOrderUseCase
+    public class ReplyOrderUseCase(OrderRepository repo, StockGetUseCase getStock, StockUpdateUseCase updateUseCase, OrderGetUseCase getOrder) : IReplyOrderUseCase
     {
+        readonly StockUpdateUseCase _updateUseCase = updateUseCase;
         readonly OrderGetUseCase _getOrder = getOrder;
         readonly StockGetUseCase _getStock = getStock;
         readonly OrderRepository _repo = repo;
-        public OrderModel Execute(bool accept, Guid order)
+        async public Task<OrderModel> Execute(bool accept, Guid order)
         {
             var orderInput = new OrderModel()
             {
                 Id = order,
-                Accept = accept
+                Accept = accept,
+                Deleted = false
             };
+
+            var validStocks = new List<StockModel>();
+            var invalidBooks = new List<BookModel>();
 
             if(orderInput.Accept != false) {
                 var orderItem = _getOrder.Execute(orderInput);
-                var validStocks = new List<StockModel>();
-                var invalidBooks = new List<BookModel>();
-                var booksLocation = new List<LocationModel>();
                 
                 foreach(var book in orderItem.Books)
                 {
                     var stock = new StockModel()
                     {
-                        Item = book
+                        Item = book,
+                        Deleted = false
                     };
-                    var searchedStocks = _getStock.Execute([stock]);
+                    var searchedStocks = await _getStock.Execute([stock]);
                     var invalidBook = book;
                     foreach(var stocked in searchedStocks)
                     {
@@ -38,7 +42,6 @@ namespace basic_api.Application.Order.UseCases
                         {
                             validStocks.Add(stocked);
                             invalidBook = null;
-                            if (stocked.Location != null) booksLocation.Add(stocked.Location);
                             break;
                         }
                     }
@@ -53,10 +56,15 @@ namespace basic_api.Application.Order.UseCases
                     orderInput.Accept = false;
                     return _repo.Update(orderInput);
                 }
-
-                orderInput.Locations = booksLocation;
+                orderInput.StockBooks = validStocks;
             }
-
+            foreach(var book in orderInput.StockBooks)
+            {
+                book.Reserved = true;
+            }
+            
+            await _updateUseCase.Execute(orderInput.StockBooks);
+            
             return _repo.Update(orderInput);
         }
     }

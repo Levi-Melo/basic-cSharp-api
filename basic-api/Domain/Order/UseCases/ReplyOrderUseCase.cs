@@ -4,6 +4,6 @@ namespace basic_api.Domain.Order.UseCases
 {
     public interface IReplyOrderUseCase
     {
-        OrderModel Execute(bool accept, Guid order);
+        Task<OrderModel> Execute(bool accept, Guid order);
     }
 }

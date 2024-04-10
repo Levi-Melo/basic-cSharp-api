@@ -9,41 +9,79 @@ namespace basic_api.Application.Order.UseCases
 {
     public class OrderInsertUseCase(OrderRepository repo, AccountGetUseCase getAccount, BookGetUseCase getBook) : InsertUseCase<OrderModel>(repo), IOrderInsertUseCase
     {
-        AccountGetUseCase _getAccount = getAccount;
-        BookGetUseCase _getBook = getBook;
+        private readonly AccountGetUseCase _getAccount = getAccount;
+        private readonly OrderRepository _repo = repo;
+        private readonly BookGetUseCase _getBook = getBook;
 
         public OrderModel Execute(Guid userId, IEnumerable<OrderParams> books)
         {
-            var userParams = new AccountModel()
+            var user = new AccountModel()
             {
-                Id = userId
+                Id = userId,
+                Deleted = false
             };
 
-            var foundUser = _getAccount.Execute(userParams);
+            if (!IsValidUser(user))
+            {
+                throw new Exception();
+            };
 
-            var searchedStock = new List<BookModel>();
+            var searchedBookParams = new List<BookModel>();
 
             foreach (var book in books)
             {
-                var Book = new BookModel() { Id = book.book };
+                var Book = new BookModel() 
+                { 
+                    Id = book.book,
+                    Deleted = false
+                };
 
-                searchedStock.Add(Book);
+                searchedBookParams.Add(Book);
             }
 
-            var founBooks = _getBook.Execute(searchedStock);
+            var foundBooks = _getBook.Execute(searchedBookParams);
 
-            if (founBooks.Count() != books.Count())
+            if (foundBooks.Count() != books.Count())
             {
                 throw new Exception();
             }
 
             var orderInput = new OrderModel()
             {
-                Books = founBooks,
-                OrderAuthor = foundUser
+                Books = foundBooks,
+                OrderAuthor = user,
             };
 
             return Execute(orderInput);
+        }
+
+        private bool IsValidUser(AccountModel user)
+        {
+            _getAccount.Execute(user);
+
+            var expiredOrder = new OrderModel()
+            {
+                OrderAuthor = user,
+                Devolved = false,
+                Deleted = false
+            };
+
+            var activeOrder = new OrderModel()
+            {
+                OrderAuthor = user,
+                Devolved = null,
+                Deleted = false
+            };
+
+
+            var foundOrders = _repo.Get([expiredOrder, activeOrder]);
+
+            if (foundOrders.Any())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
