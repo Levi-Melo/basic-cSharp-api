@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public class AccountRepository(DataContext context) : BaseRepository<AccountModel>(context), IAccountRepository
+    public class RoleRepository(DataContext context) : BaseRepository<RoleModel>(context), IRoleRepository
     {
     }
 }

@@ -1,16 +1,15 @@
 ﻿using basic_api.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using basic_api.Infrastructure.Database.Context;
-using basic_api.Infrastructure.Database.Models;
 using System.Reflection;
+using basic_api.Data.Entities;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public abstract class BaseRepository<T>(DataContext context) : IBaseRepository<T>
-        where T : BaseEntity
+    public abstract class TenantenantRepository(DataContext context) : ITenantRepository
     {
 
-        protected DbSet<T> _dbSet = context.Set<T>();
+        protected DbSet<ITenant> _dbSet = context.Set<ITenant>();
 
 
         private DataContext _context = context;
@@ -20,56 +19,56 @@ namespace basic_api.Infrastructure.Database.Repositories
             return _context;
         }
 
-        public IEnumerable<T> Get(IEnumerable<T> input)
+        public IEnumerable<ITenant> Get(IEnumerable<ITenant> input)
         {
             return
-               [.. Get(true).Where(p => BaseRepository<T>.ContainsProperties(p, input))];
+               [.. Get(true).Where(p => ContainsProperties(p, input))];
         }
 
-        public T Get(T input)
+        public ITenant Get(ITenant input)
         {
             return 
                 Get(true)
-                .Where(p => BaseRepository<T>.ContainsProperties(p, input))
+                .Where(p => ContainsProperties(p, input))
                 .Single();
         }
 
-        public T Insert(T entity)
+        public ITenant Insert(ITenant entity)
         {
-            _context.Set<T>().Add(entity);
+            _context.Set<ITenant>().Add(entity);
 
             return entity;
         }
 
 
-        public IEnumerable<T> Insert(IEnumerable<T> input)
+        public IEnumerable<ITenant> Insert(IEnumerable<ITenant> input)
         {
-            _context.Set<T>().AddRange(input);
+            _context.Set<ITenant>().AddRange(input);
 
             return input;
         }
 
-        public IEnumerable<T> Update(IEnumerable<T> input)
+        public IEnumerable<ITenant> Update(IEnumerable<ITenant> input)
 
         {
-            _context.Set<T>().UpdateRange(input);
+            _context.Set<ITenant>().UpdateRange(input);
 
             return input;
         }
-        public T Update(T entity)
+        public ITenant Update(ITenant entity)
         {
-            _context.Set<T>().Update(entity);
+            _context.Set<ITenant>().Update(entity);
 
             return entity;
         }
 
-        public void Delete(T input)
+        public void Delete(ITenant input)
         {
             var entity = Get(input);
             Remove(entity);
         }
 
-        public void Delete(IEnumerable<T> input)
+        public void Delete(IEnumerable<ITenant> input)
         {
             var entities = Get(input);
             Remove(entities);
@@ -93,12 +92,12 @@ namespace basic_api.Infrastructure.Database.Repositories
             }
         }
 
-        private static bool ContainsProperties(T instance, T validationItem)
+        private static bool ContainsProperties(ITenant instance, ITenant validationItem)
         {
-            var validationType = validationItem.GetType();
+            var validationTenantype = validationItem.GetType();
 
             {
-                PropertyInfo[] validationProperties = validationType.GetProperties();
+                PropertyInfo[] validationProperties = validationTenantype.GetProperties();
 
                 foreach (PropertyInfo property in validationProperties)
                 {
@@ -119,27 +118,27 @@ namespace basic_api.Infrastructure.Database.Repositories
             return true; // Se todas as propriedades forem iguais, retorna verdadeiro
         }
 
-        private static bool ContainsProperties(T instance, IEnumerable<T> validationItems)
+        private static bool ContainsProperties(ITenant instance, IEnumerable<ITenant> validationItems)
         {
             var results = 
                 validationItems
-                .Select(item => BaseRepository<T>.ContainsProperties(instance, item))
+                .Select(item => ContainsProperties(instance, item))
                 .ToArray();
 
             return results.Contains(true);
         }
 
-        private void Remove(T entity)
+        private void Remove(ITenant entity)
         {
             _dbSet.Remove(entity);
         }
 
-        private void Remove(IEnumerable<T> entity)
+        private void Remove(IEnumerable<ITenant> entity)
         {
             _dbSet.RemoveRange(entity);
         }
 
-        private IQueryable<T> Get(bool track = true)
+        private IQueryable<ITenant> Get(bool track = true)
         {
             if (!track)
             {
