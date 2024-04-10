@@ -10,7 +10,7 @@ namespace basic_api.Infrastructure.Service
         private readonly string _directory = directory;
         private readonly IAmazonS3 _s3Client = s3Client;
 
-        public async Task<byte[]> DownloadAsync(string fileName, byte[] buffer)
+        public async Task<byte[]> DownloadAsync(string fileName)
         {
             var request = new GetObjectRequest()
             {
