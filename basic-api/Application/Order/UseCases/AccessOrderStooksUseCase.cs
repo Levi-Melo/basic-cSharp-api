@@ -2,6 +2,7 @@
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Application.Stock.UseCases;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace basic_api.Application.Order.UseCases
 {

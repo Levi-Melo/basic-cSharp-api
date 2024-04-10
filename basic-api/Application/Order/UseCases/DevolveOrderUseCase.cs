@@ -4,11 +4,10 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Domain.Order.UseCases
 {
-    public class DevolveOrderUseCase(OrderRepository repo, StockGetUseCase getStock, StockUpdateUseCase updateStock) : IDevolveOrderUseCase
+    public class DevolveOrderUseCase(OrderRepository repo, StockUpdateUseCase updateStock) : IDevolveOrderUseCase
     {
         private readonly StockUpdateUseCase _updateStock = updateStock;
         private readonly OrderRepository _repo = repo;
-        private readonly StockGetUseCase _getStock = getStock;
         public async Task<OrderModel> Execute(Guid order, IEnumerable<StockModel> stocks)
         {
             var orderParams = new OrderModel()

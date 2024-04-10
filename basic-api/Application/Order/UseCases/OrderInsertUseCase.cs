@@ -4,16 +4,18 @@ using basic_api.Application.Book.UseCases;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Infrastructure.Database.Repositories;
+using basic_api.Infrastructure.Services;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class OrderInsertUseCase(OrderRepository repo, AccountGetUseCase getAccount, BookGetUseCase getBook) : InsertUseCase<OrderModel>(repo), IOrderInsertUseCase
+    public class OrderInsertUseCase(OrderRepository repo, AccountGetUseCase getAccount, BookGetUseCase getBook, EmailService emailService) : InsertUseCase<OrderModel>(repo), IOrderInsertUseCase
     {
+        private readonly EmailService _emailService = emailService;
         private readonly AccountGetUseCase _getAccount = getAccount;
         private readonly OrderRepository _repo = repo;
         private readonly BookGetUseCase _getBook = getBook;
 
-        public OrderModel Execute(Guid userId, IEnumerable<OrderParams> books)
+        public async Task<OrderModel> ExecuteAsync(Guid userId, IEnumerable<OrderParams> books)
         {
             var user = new AccountModel()
             {
@@ -21,7 +23,9 @@ namespace basic_api.Application.Order.UseCases
                 Deleted = false
             };
 
-            if (!IsValidUser(user))
+            var validUser = IsValidUser(user);
+
+            if (validUser == null)
             {
                 throw new Exception();
             };
@@ -52,12 +56,17 @@ namespace basic_api.Application.Order.UseCases
                 OrderAuthor = user,
             };
 
-            return Execute(orderInput);
+
+            var created =  Execute(orderInput);
+
+            await _emailService.Send(validUser.Email, "Pedido Efetuado", $"Pedido {created.Id} aguardando aprovação");
+
+            return created;
         }
 
-        private bool IsValidUser(AccountModel user)
+        private AccountModel? IsValidUser(AccountModel user)
         {
-            _getAccount.Execute(user);
+            var found = _getAccount.Execute(user);
 
             var expiredOrder = new OrderModel()
             {
@@ -78,10 +87,10 @@ namespace basic_api.Application.Order.UseCases
 
             if (foundOrders.Any())
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return found;
         }
     }
 }

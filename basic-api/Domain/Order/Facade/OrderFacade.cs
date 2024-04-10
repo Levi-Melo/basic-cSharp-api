@@ -10,7 +10,7 @@ namespace basic_api.Domain.Order.Facade
 
         Task<OrderModel> Devolve(Guid order, IEnumerable<StockModel> stocks);
         
-        OrderModel Insert(Guid userId, IEnumerable<OrderParams> books);
+        Task<OrderModel> Insert(Guid userId, IEnumerable<OrderParams> books);
         
         Task<OrderModel> Reply(bool accept, Guid order);
     }

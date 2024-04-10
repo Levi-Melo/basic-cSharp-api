@@ -37,9 +37,9 @@ namespace basic_api.Application.Order.Facade
             return await _devolveOrder.Execute(order, stocks);
         }
 
-        public OrderModel Insert(Guid userId, IEnumerable<OrderParams> books)
+        public async Task<OrderModel> Insert(Guid userId, IEnumerable<OrderParams> books)
         {
-            return _insertUseCase.Execute(userId, books);
+            return await _insertUseCase.ExecuteAsync(userId, books);
         }
 
         public async Task<OrderModel> Reply(bool accept, Guid order)

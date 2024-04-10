@@ -5,7 +5,7 @@ namespace basic_api.Domain.Order.UseCases
 {
     public interface IOrderInsertUseCase : IInsertUseCase<OrderModel>
     {
-        OrderModel Execute(Guid userId, IEnumerable<OrderParams> books);
+        Task<OrderModel> ExecuteAsync(Guid userId, IEnumerable<OrderParams> books);
     }
     public struct OrderParams
     {
