@@ -46,5 +46,4 @@ namespace basic_api.Application.Order.UseCases
             return Execute(orderInput);
         }
     }
-    }
 }
