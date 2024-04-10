@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Publisher.UseCases
 {
-    public class PublisherUpdateUseCase(BaseRepository<PublisherModel> repo) : UpdateUseCase<PublisherModel>(repo), IPublisherUpdateUseCase
+    public class PublisherUpdateUseCase(PublisherRepository repo) : UpdateUseCase<PublisherModel>(repo), IPublisherUpdateUseCase
     {
     }
 }

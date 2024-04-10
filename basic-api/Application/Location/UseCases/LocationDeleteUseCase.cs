@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Location.UseCases
 {
-    public class LocationDeleteUseCase(BaseRepository<LocationModel> repo) : DeleteUseCase<LocationModel>(repo), ILocationDeleteUseCase
+    public class LocationDeleteUseCase(LocationRepository repo) : DeleteUseCase<LocationModel>(repo), ILocationDeleteUseCase
     {
     }
 }

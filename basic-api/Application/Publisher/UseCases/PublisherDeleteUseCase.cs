@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Publisher.UseCases
 {
-    public class PublisherDeleteUseCase(BaseRepository<PublisherModel> repo) : DeleteUseCase<PublisherModel>(repo), IPublisherDeleteUseCase
+    public class PublisherDeleteUseCase(PublisherRepository repo) : DeleteUseCase<PublisherModel>(repo), IPublisherDeleteUseCase
     {
     }
 }

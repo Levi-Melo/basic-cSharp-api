@@ -5,7 +5,7 @@ using basic_api.Domain.Genre.UseCases;
 
 namespace basic_api.Application.Genre.UseCases
 {
-    public class GenreGetUseCase(BaseRepository<GenreModel> repo) : GetUseCase<GenreModel>(repo), IGenreGetUseCase
+    public class GenreGetUseCase(GenreRepository repo) : GetUseCase<GenreModel>(repo), IGenreGetUseCase
     {
     }
 }

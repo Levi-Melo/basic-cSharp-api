@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Location.UseCases
 {
-    public class LocationUpdateUseCase(BaseRepository<LocationModel> repo) : UpdateUseCase<LocationModel>(repo), ILocationUpdateUseCase
+    public class LocationUpdateUseCase(LocationRepository repo) : UpdateUseCase<LocationModel>(repo), ILocationUpdateUseCase
     {
     }
 }

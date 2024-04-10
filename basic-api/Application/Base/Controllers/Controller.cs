@@ -8,7 +8,7 @@ namespace basic_api.Controllers
     public abstract class Controller<T>(IFacade<T> facade) : ControllerBase, IController<T>
     where T : IBaseEntity
     {
-        private IFacade<T> _facade = facade;
+        private readonly IFacade<T> _facade = facade;
 
         [HttpGet(Name = "")]
         public T Get(T input)

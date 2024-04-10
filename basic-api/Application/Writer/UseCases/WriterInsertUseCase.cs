@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Writer.UseCases
 {
-    public class WriterInsertUseCase(BaseRepository<WriterModel> repo) : InsertUseCase<WriterModel>(repo), IWriterInsertUseCase
+    public class WriterInsertUseCase(WriterRepository repo) : InsertUseCase<WriterModel>(repo), IWriterInsertUseCase
     {
     }
 }

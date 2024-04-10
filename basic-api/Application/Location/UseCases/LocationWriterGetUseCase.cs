@@ -5,7 +5,7 @@ using basic_api.Domain.Location.UseCases;
 
 namespace basic_api.Application.Location.UseCases
 {
-    public class LocationGetUseCase(BaseRepository<LocationModel> repo) : GetUseCase<LocationModel>(repo), ILocationGetUseCase
+    public class LocationGetUseCase(LocationRepository repo) : GetUseCase<LocationModel>(repo), ILocationGetUseCase
     {
     }
 }

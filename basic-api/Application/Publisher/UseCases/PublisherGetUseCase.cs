@@ -5,7 +5,7 @@ using basic_api.Domain.Publisher.UseCases;
 
 namespace basic_api.Application.Publisher.UseCases
 {
-    public class PublisherGetUseCase(BaseRepository<PublisherModel> repo) : GetUseCase<PublisherModel>(repo), IPublisherGetUseCase
+    public class PublisherGetUseCase(PublisherRepository repo) : GetUseCase<PublisherModel>(repo), IPublisherGetUseCase
     {
     }
 }

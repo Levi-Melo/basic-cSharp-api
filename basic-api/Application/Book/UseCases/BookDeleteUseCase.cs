@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Book.UseCases
 {
-    public class BookDeleteUseCase(BaseRepository<BookModel> repo) : DeleteUseCase<BookModel>(repo), IBookDeleteUseCase
+    public class BookDeleteUseCase(BookRepository repo) : DeleteUseCase<BookModel>(repo), IBookDeleteUseCase
     {
     }
 }

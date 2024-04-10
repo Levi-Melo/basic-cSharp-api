@@ -1,9 +1,7 @@
-﻿using basic_api.Domain.Base.UseCases;
-using basic_api.Infrastructure.Database.Models;
-
-namespace basic_api.Domain.Book.UseCases
+﻿namespace basic_api.Domain.Book.UseCases
 {
-    public interface IBookUpdateUseCase : IUpdateUseCase<BookModel>
+    public interface IBookUpdateUseCase
     {
+        bool Execute(string bookId, string userId);
     }
 }

@@ -5,7 +5,7 @@ using basic_api.Domain.Stock.UseCases;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockGetUseCase(BaseRepository<StockModel> repo) : GetUseCase<StockModel>(repo), IStockGetUseCase
+    public class StockGetUseCase(StockRepository repo) : GetUseCase<StockModel>(repo), IStockGetUseCase
     {
     }
 }

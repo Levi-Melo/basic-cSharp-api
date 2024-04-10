@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Writer.UseCases
 {
-    public class WriterDeleteUseCase(BaseRepository<WriterModel> repo) : DeleteUseCase<WriterModel>(repo), IWriterDeleteUseCase
+    public class WriterDeleteUseCase(WriterRepository repo) : DeleteUseCase<WriterModel>(repo), IWriterDeleteUseCase
     {
     }
 }

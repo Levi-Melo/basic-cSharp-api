@@ -5,7 +5,7 @@ using basic_api.Domain.Book.UseCases;
 
 namespace basic_api.Application.Book.UseCases
 {
-    public class BookGetUseCase(BaseRepository<BookModel> repo) : GetUseCase<BookModel>(repo), IBookGetUseCase
+    public class BookGetUseCase(BookRepository repo) : GetUseCase<BookModel>(repo), IBookGetUseCase
     {
     }
 }

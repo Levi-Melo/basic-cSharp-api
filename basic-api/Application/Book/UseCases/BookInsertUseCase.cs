@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Book.UseCases
 {
-    public class BookInsertUseCase(BaseRepository<BookModel> repo) : InsertUseCase<BookModel>(repo), IBookInsertUseCase
+    public class BookInsertUseCase(BookRepository repo) : InsertUseCase<BookModel>(repo), IBookInsertUseCase
     {
     }
 }

@@ -9,7 +9,7 @@ namespace basic_api.Application.Base.UseCase
     where T : BaseEntity
     {
 
-        private BaseRepository<T> _repository = repo;
+        private readonly BaseRepository<T> _repository = repo;
 
         public void Execute(T entity)
         {

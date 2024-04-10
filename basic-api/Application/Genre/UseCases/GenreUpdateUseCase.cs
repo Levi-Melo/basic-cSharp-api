@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Genre.UseCases
 {
-    public class GenreUpdateUseCase(BaseRepository<GenreModel> repo) : UpdateUseCase<GenreModel>(repo), IGenreUpdateUseCase
+    public class GenreUpdateUseCase(GenreRepository repo) : UpdateUseCase<GenreModel>(repo), IGenreUpdateUseCase
     {
     }
 }

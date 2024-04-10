@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockUpdateUseCase(BaseRepository<StockModel> repo) : UpdateUseCase<StockModel>(repo), IStockUpdateUseCase
+    public class StockUpdateUseCase(StockRepository repo) : UpdateUseCase<StockModel>(repo), IStockUpdateUseCase
     {
     }
 }

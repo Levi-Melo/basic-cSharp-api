@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockInsertUseCase(BaseRepository<StockModel> repo) : InsertUseCase<StockModel>(repo), IStockInsertUseCase
+    public class StockInsertUseCase(StockRepository repo) : InsertUseCase<StockModel>(repo), IStockInsertUseCase
     {
     }
 }

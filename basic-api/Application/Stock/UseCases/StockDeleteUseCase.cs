@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockDeleteUseCase(BaseRepository<StockModel> repo) : DeleteUseCase<StockModel>(repo), IStockDeleteUseCase
+    public class StockDeleteUseCase(StockRepository repo) : DeleteUseCase<StockModel>(repo), IStockDeleteUseCase
     {
     }
 }

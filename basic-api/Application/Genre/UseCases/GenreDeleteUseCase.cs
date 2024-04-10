@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Genre.UseCases
 {
-    public class GenreDeleteUseCase(BaseRepository<GenreModel> repo) : DeleteUseCase<GenreModel>(repo), IGenreDeleteUseCase
+    public class GenreDeleteUseCase(GenreRepository repo) : DeleteUseCase<GenreModel>(repo), IGenreDeleteUseCase
     {
     }
 }

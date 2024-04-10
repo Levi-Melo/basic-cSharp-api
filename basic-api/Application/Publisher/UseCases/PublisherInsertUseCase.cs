@@ -5,7 +5,7 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Publisher.UseCases
 {
-    public class PublisherInsertUseCase(BaseRepository<PublisherModel> repo) : InsertUseCase<PublisherModel>(repo), IPublisherInsertUseCase
+    public class PublisherInsertUseCase(PublisherRepository repo) : InsertUseCase<PublisherModel>(repo), IPublisherInsertUseCase
     {
     }
 }
