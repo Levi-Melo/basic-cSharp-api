@@ -1,4 +1,5 @@
 ﻿using basic_api.Data.Services;
+using basic_api.Infrastructure.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,7 +8,7 @@ using System.Text;
 namespace basic_api.Infrastructure.Services
 {
     public class AuthService<T>(IConfiguration config, int minutes) : IAuthService<T>
-        where T : struct
+        where T : RecordMarker
     {
         readonly IConfiguration _config = config;
         readonly int _minutes = minutes;
@@ -48,7 +49,8 @@ namespace basic_api.Infrastructure.Services
 
             var result = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
-            T payload = new();
+            T? payload = null;
+
             var properties = typeof(T).GetProperties();
             foreach (var claim in readToken.Claims)
             {
@@ -58,6 +60,11 @@ namespace basic_api.Infrastructure.Services
                     var value = Convert.ChangeType(claim.Value, property.PropertyType);
                     property.SetValue(payload, value);
                 }
+            }
+
+            if(payload == null)
+            {
+                throw new Exception();
             }
 
             return payload;
