@@ -17,6 +17,6 @@ namespace basic_api.Data.Entities
 
         RoleModel Role { get; set; }
 
-        IEnumerable<BookModel> ReservedBooks { get; set; }
+        public IEnumerable<OrderModel>? Orders { get; set; }
     }
 }

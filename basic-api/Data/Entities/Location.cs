@@ -9,6 +9,6 @@ namespace basic_api.Data.Entities
 
         object Metadata { get; set; }
 
-        IEnumerable<BookModel> Books { get; set; }
+        IEnumerable<StockModel> Books { get; set; }
     }
 }

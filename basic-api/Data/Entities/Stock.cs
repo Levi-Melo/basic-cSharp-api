@@ -14,5 +14,7 @@ namespace basic_api.Data.Entities
         byte[]? File { get; set; }
 
         bool HaveFile { get; set; }
+
+        public IEnumerable<OrderModel>? Orders { get; set; }
     }
 }

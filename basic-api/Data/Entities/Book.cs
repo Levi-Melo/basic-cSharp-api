@@ -26,6 +26,8 @@ namespace basic_api.Data.Entities
 
         int Edition { get; set; }
 
+        IEnumerable<OrderModel>? Orders { get; set; }
+
         IEnumerable<WriterModel> Author { get; set; }
 
         IEnumerable<WriterModel> Reviewer { get; set; }

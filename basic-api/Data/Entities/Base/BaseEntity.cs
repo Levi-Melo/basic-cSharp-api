@@ -8,5 +8,6 @@ namespace basic_api.Data.Entities.Base
         Guid Id { get; set; }
 
         TenantModel Tenant { get; set; }
+
     }
 }

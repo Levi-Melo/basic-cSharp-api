@@ -10,5 +10,7 @@ namespace basic_api.Data.Entities
         string Description { get; set; }
 
         IEnumerable<BookModel> Books { get; set; }
+        
+        IEnumerable<WriterModel> Writers { get; set; }
     }
 }
