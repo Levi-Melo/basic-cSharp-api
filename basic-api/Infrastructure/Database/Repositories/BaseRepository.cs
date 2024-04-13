@@ -3,17 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using basic_api.Infrastructure.Database.Context;
 using basic_api.Infrastructure.Database.Models;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public abstract class BaseRepository<T>(DataContext context) : IBaseRepository<T>
+    public abstract class BaseRepository<T> : IBaseRepository<T>
         where T : BaseEntity
     {
 
-        protected DbSet<T> _dbSet = context.Set<T>();
+        protected DbSet<T> _dbSet;
+        private DataContext _context;
+        private IDbContextTransaction _transaction;
 
+        public BaseRepository(DataContext context){
+            _dbSet = context.Set<T>();
+            _context = context;
+        }
 
-        private DataContext _context = context;
+        protected BaseRepository()
+        {
+        }
 
         public DbContext GetContext()
         {
@@ -93,6 +102,30 @@ namespace basic_api.Infrastructure.Database.Repositories
             }
         }
 
+        private void Remove(T entity)
+        {
+            _dbSet.Remove(entity);
+        }
+
+        private void Remove(IEnumerable<T> entity)
+        {
+            _dbSet.RemoveRange(entity);
+        }
+        public void BeginTransaction()
+        {
+            _transaction = _context.Database.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            _transaction.Commit();
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+        }
+
         private static bool ContainsProperties(T instance, T validationItem)
         {
             var validationType = validationItem.GetType();
@@ -121,22 +154,12 @@ namespace basic_api.Infrastructure.Database.Repositories
 
         private static bool ContainsProperties(T instance, IEnumerable<T> validationItems)
         {
-            var results = 
+            var results =
                 validationItems
                 .Select(item => BaseRepository<T>.ContainsProperties(instance, item))
                 .ToArray();
 
             return results.Contains(true);
-        }
-
-        private void Remove(T entity)
-        {
-            _dbSet.Remove(entity);
-        }
-
-        private void Remove(IEnumerable<T> entity)
-        {
-            _dbSet.RemoveRange(entity);
         }
 
         private IQueryable<T> Get(bool track = true)
@@ -148,6 +171,11 @@ namespace basic_api.Infrastructure.Database.Repositories
 
             return _dbSet;
 
+        }
+
+        public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

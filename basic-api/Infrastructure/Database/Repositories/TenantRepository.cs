@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using basic_api.Infrastructure.Database.Context;
 using System.Reflection;
 using basic_api.Data.Entities;
+using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public abstract class TenantenantRepository(DataContext context) : ITenantRepository
+    public abstract class TenantRepository(DataContext context) : ITenantRepository
     {
 
         protected DbSet<ITenant> _dbSet = context.Set<ITenant>();
@@ -146,6 +147,27 @@ namespace basic_api.Infrastructure.Database.Repositories
             }
 
             return _dbSet;
+
+        }
+        new public static void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TenantModel>(entity =>
+            {
+                entity.ToTable("tenants");
+                // Mapeamento das propriedades
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Created_at).IsRequired();
+                entity.Property(e => e.Updated_at);
+                entity.Property(e => e.Deleted_at);
+                entity.Property(e => e.Deleted);
+                entity.Property(e => e.Created_id).IsRequired();
+                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Document).IsRequired();
+                entity.Property(e => e.ValidUntil).IsRequired();
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Phone).IsRequired();
+                entity.Property(e => e.DueDate).IsRequired();
+            });
 
         }
     }
