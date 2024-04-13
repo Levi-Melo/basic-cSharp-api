@@ -1,6 +1,6 @@
 using basic_api.Data.Entities;
 
-namespace basic_api.Domain.Base.Facade
+namespace basic_api.Domain.Tenant.Facade
 {
     public interface ITenantFacade
     {

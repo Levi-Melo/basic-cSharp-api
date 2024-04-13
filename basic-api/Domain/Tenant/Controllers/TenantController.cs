@@ -1,6 +1,6 @@
 using basic_api.Data.Entities;
 
-namespace basic_api.Domain.Base.Controller
+namespace basic_api.Domain.Tenant.Controller
 {
     public interface ITenantController
     {

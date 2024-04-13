@@ -1,6 +1,6 @@
 using basic_api.Data.Entities;
 
-namespace basic_api.Domain.Base.UseCases
+namespace basic_api.Domain.Tenant.UseCases
 {
     public interface ITenantDeleteUseCase
     {
