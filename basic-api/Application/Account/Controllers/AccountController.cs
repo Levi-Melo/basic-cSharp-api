@@ -12,7 +12,7 @@ namespace basic_api.Application.Account.Controllers
     {
         readonly IAccountFacade _facade = facade;
         
-        [HttpPost("signin")]
+        [HttpPost("signIn")]
         public string SignIn(string email, string password)
         {
             return _facade.SignIn(email, password);

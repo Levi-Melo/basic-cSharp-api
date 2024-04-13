@@ -20,7 +20,7 @@ var app = builder.Build();
 app.UseMiddleware<AuthMiddleware>();
 
 
-app.MapWhen(context => !context.Request.Path.StartsWithSegments("/accounts/signin"), appBuilder =>
+app.MapWhen(context => !context.Request.Path.StartsWithSegments("/accounts/signIn"), appBuilder =>
 {
     appBuilder.UseRouting();
     appBuilder.UseEndpoints(endpoints =>
@@ -34,7 +34,7 @@ app.UseMiddleware<EnsureOperatorMiddleware>();
 
 app.MapWhen(
     context => !context.Request.Method.Equals("GET", StringComparison.CurrentCultureIgnoreCase) || 
-    context.Request.Path.StartsWithSegments("/accounts/signin") || 
+    context.Request.Path.StartsWithSegments("/accounts/signIn") || 
     !(context.Request.Path.StartsWithSegments("/accounts") && context.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase)), 
     appBuilder =>
     {
@@ -49,7 +49,7 @@ app.MapWhen(
 app.UseMiddleware<EnsureAdminMiddleware>();
 app.MapWhen(
     context => !context.Request.Method.Equals("GET", StringComparison.CurrentCultureIgnoreCase) || 
-    !context.Request.Path.StartsWithSegments("/accounts/signin") || 
+    !context.Request.Path.StartsWithSegments("/accounts/signIn") || 
     (context.Request.Path.StartsWithSegments("/accounts") && context.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase)), 
     appBuilder =>
 {
