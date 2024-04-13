@@ -1,23 +1,26 @@
-﻿using basic_api.Application.Account.UseCases;
-using basic_api.Application.Stock.UseCases;
+﻿using basic_api.Data.Repositories;
+using basic_api.Data.Services;
+using basic_api.Domain.Account.UseCases;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Domain.Stock.UseCases;
 using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
-using basic_api.Infrastructure.Services;
+using Microsoft.AspNetCore.SignalR;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class ReplyOrderUseCase(OrderRepository repo, StockGetUseCase getStock, StockUpdateUseCase updateUseCase, OrderGetUseCase getOrder, EmailService emailService, AccountGetUseCase getAccount) : IReplyOrderUseCase
+    public class ReplyOrderUseCase(IOrderRepository repo, IStockGetUseCase getStock, IStockUpdateUseCase updateUseCase, IOrderGetUseCase getOrder, IEmailService emailService, IAccountGetUseCase getAccount, IHubContext hub) : IReplyOrderUseCase
     {
-        private readonly AccountGetUseCase _getAccount = getAccount;
-        private readonly StockUpdateUseCase _updateUseCase = updateUseCase;
-        private readonly OrderGetUseCase _getOrder = getOrder;
-        private readonly StockGetUseCase _getStock = getStock;
-        private readonly EmailService _emailService = emailService;
-        private readonly OrderRepository _repo = repo;
+        private readonly IHubContext _hub = hub;
+        private readonly IAccountGetUseCase _getAccount = getAccount;
+        private readonly IStockUpdateUseCase _updateUseCase = updateUseCase;
+        private readonly IOrderGetUseCase _getOrder = getOrder;
+        private readonly IStockGetUseCase _getStock = getStock;
+        private readonly IEmailService _emailService = emailService;
+        private readonly IOrderRepository _repo = repo;
         async public Task<OrderModel> Execute(bool accept, Guid order)
         {
+            _repo.BeginTransaction();
+
             var orderInput = new OrderModel()
             {
                 Id = order,
@@ -28,6 +31,7 @@ namespace basic_api.Application.Order.UseCases
             var invalidBooks = new List<BookModel>();
             var orderItem = _getOrder.Execute(orderInput);
             var account = _getAccount.Execute(orderItem.OrderAuthor);
+            OrderModel result;
             if (accept != false) {
                 foreach (var book in orderItem.Books)
                 {
@@ -59,7 +63,12 @@ namespace basic_api.Application.Order.UseCases
                     orderInput.Accept = false;
 
                     await _emailService.Send(account.Email, "Pedido Recusado", $"Pedido {orderItem.Id} foi recusado");
-                    return _repo.Update(orderInput);
+                    
+                    result = _repo.Update(orderInput);
+
+                    _repo.Commit();
+
+                    return result;
                 }
 
                 orderItem.StockBooks = validStocks;
@@ -69,6 +78,7 @@ namespace basic_api.Application.Order.UseCases
                     stock.Reserved = true;
                 }
                 await _updateUseCase.Execute(orderItem.StockBooks);
+                await _hub.Clients.All.SendAsync($"{orderItem.Tenant.Id}-reserveds", orderItem.StockBooks);
             }
 
             orderItem.Accept = accept;
@@ -77,7 +87,11 @@ namespace basic_api.Application.Order.UseCases
 
             await _emailService.Send(account.Email, $"Pedido {acceptMessage}", $"Pedido {orderItem.Id} foi {acceptMessage.ToLower()}");
             
-            return _repo.Update(orderItem);
+            result = _repo.Update(orderItem);
+
+            _repo.Commit();
+            
+            return result;
         }
     }
 }

@@ -1,21 +1,20 @@
-using basic_api.Application.Base.UseCase;
 using basic_api.Data.Entities;
-using basic_api.Domain.Base.Facade;
-using basic_api.Infrastructure.Database.Models;
+using basic_api.Domain.Tenant.Facade;
+using basic_api.Domain.Tenant.UseCases;
 
-namespace basic_api.Application.Base
+namespace basic_api.Application.Tenant.Facade
 {
     public class TenantFacade(
-        TenantGetUseCase getUseCase,
-        TenantDeleteUseCase deleteUseCase,
-        TenantInsertUseCase insertUseCase,
-        TenantUpdateUseCase updateUseCase
+        ITenantGetUseCase getUseCase,
+        ITenantDeleteUseCase deleteUseCase,
+        ITenantInsertUseCase insertUseCase,
+        ITenantUpdateUseCase updateUseCase
         ) : ITenantFacade
 {
-        readonly TenantGetUseCase _getUseCase = getUseCase;
-        readonly TenantDeleteUseCase _deleteUseCase = deleteUseCase;
-        readonly TenantInsertUseCase _insertUseCase = insertUseCase;
-        readonly TenantUpdateUseCase _updateUseCase = updateUseCase;
+        readonly ITenantGetUseCase _getUseCase = getUseCase;
+        readonly ITenantDeleteUseCase _deleteUseCase = deleteUseCase;
+        readonly ITenantInsertUseCase _insertUseCase = insertUseCase;
+        readonly ITenantUpdateUseCase _updateUseCase = updateUseCase;
 
         public void Delete(ITenant entity)
         {

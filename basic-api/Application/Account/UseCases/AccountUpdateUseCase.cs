@@ -1,11 +1,12 @@
 ﻿using basic_api.Application.Base.UseCase;
+using basic_api.Data.Repositories;
 using basic_api.Domain.Account.UseCases;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Account.UseCases
 {
-    public class AccountUpdateUseCase(AccountRepository repo) : UpdateUseCase<AccountModel>(repo), IAccountUpdateUseCase
+    public class AccountUpdateUseCase(IAccountRepository repo) : UpdateUseCase<AccountModel>(repo), IAccountUpdateUseCase
     {
         new public AccountModel Execute(AccountModel input)
         {

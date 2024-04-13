@@ -13,5 +13,7 @@ namespace basic_api.Domain.Order.Facade
         Task<OrderModel> Insert(Guid userId, IEnumerable<OrderParams> books);
         
         Task<OrderModel> Reply(bool accept, Guid order);
+        
+        Task VerifyOrdersStatus();
     }
 }

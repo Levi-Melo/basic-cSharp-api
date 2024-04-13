@@ -1,19 +1,20 @@
 ﻿using basic_api.Application.Base;
-using basic_api.Application.Order.UseCases;
 using basic_api.Domain.Order.Facade;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Application.Order.Facade
 {
+    
     public class OrderFacade(
-        OrderGetUseCase getUseCase, 
-        OrderDeleteUseCase deleteUseCase, 
-        OrderInsertUseCase insertUseCase, 
-        OrderUpdateUseCase updateUseCase,
-        AccessOrderStooksUseCase accessOrderStooks,
-        DevolveOrderUseCase devolveOrder,
-        ReplyOrderUseCase replyOrder
+        IOrderGetUseCase getUseCase, 
+        IOrderDeleteUseCase deleteUseCase, 
+        IOrderInsertUseCase insertUseCase, 
+        IOrderUpdateUseCase updateUseCase,
+        IAccessOrderStooksUseCase accessOrderStooks,
+        IDevolveOrderUseCase devolveOrder,
+        IReplyOrderUseCase replyOrder,
+        IVerifyStatusOrderUsecase verifyOrdersStatus
             ) : Facade<OrderModel>(
                 getUseCase, 
                 deleteUseCase, 
@@ -22,10 +23,11 @@ namespace basic_api.Application.Order.Facade
                 ), IOrderFacade
     {
 
-        private readonly OrderInsertUseCase _insertUseCase = insertUseCase;
-        private readonly ReplyOrderUseCase _replyOrder = replyOrder;
-        private readonly AccessOrderStooksUseCase _accessOrderStooks = accessOrderStooks;
-        private readonly DevolveOrderUseCase _devolveOrder = devolveOrder;
+        private readonly IVerifyStatusOrderUsecase _verifyOrdersStatus = verifyOrdersStatus;
+        private readonly IOrderInsertUseCase _insertUseCase = insertUseCase;
+        private readonly IReplyOrderUseCase _replyOrder = replyOrder;
+        private readonly IAccessOrderStooksUseCase _accessOrderStooks = accessOrderStooks;
+        private readonly IDevolveOrderUseCase _devolveOrder = devolveOrder;
 
         public async Task<IEnumerable<StockModel>> AccessOrderStooks(Guid user, Guid order)
         {
@@ -45,6 +47,11 @@ namespace basic_api.Application.Order.Facade
         public async Task<OrderModel> Reply(bool accept, Guid order)
         {
             return await _replyOrder.Execute(accept, order);
+        }
+
+        public async Task VerifyOrdersStatus()
+        {
+            await _verifyOrdersStatus.Execute();
         }
     }
 }

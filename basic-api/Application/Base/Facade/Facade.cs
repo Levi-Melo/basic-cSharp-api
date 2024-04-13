@@ -1,21 +1,21 @@
-using basic_api.Application.Base.UseCase;
+using basic_api.Domain.Base.UseCases;
 using basic_api.Domain.Base.Facade;
 using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Application.Base
 {
     public abstract class Facade<T>(
-        GetUseCase<T> getUseCase,
-        DeleteUseCase<T> deleteUseCase,
-        InsertUseCase<T> insertUseCase,
-        UpdateUseCase<T> updateUseCase
+        IGetUseCase<T> getUseCase,
+        IDeleteUseCase<T> deleteUseCase,
+        IInsertUseCase<T> insertUseCase,
+        IUpdateUseCase<T> updateUseCase
         ) : IFacade<T>
     where T : BaseEntity
 {
-        readonly GetUseCase<T> _getUseCase = getUseCase;
-        readonly DeleteUseCase<T> _deleteUseCase = deleteUseCase;
-        readonly InsertUseCase<T> _insertUseCase = insertUseCase;
-        readonly UpdateUseCase<T> _updateUseCase = updateUseCase;
+        readonly IGetUseCase<T> _getUseCase = getUseCase;
+        readonly IDeleteUseCase<T> _deleteUseCase = deleteUseCase;
+        readonly IInsertUseCase<T> _insertUseCase = insertUseCase;
+        readonly IUpdateUseCase<T> _updateUseCase = updateUseCase;
 
         public void Delete(T entity)
         {

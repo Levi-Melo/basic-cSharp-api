@@ -5,10 +5,10 @@ using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Base.UseCase
 {
-    public abstract class GetUseCase<T>(BaseRepository<T> repo) : IGetUseCase<T>
+    public abstract class GetUseCase<T>(IBaseRepository<T> repo) : IGetUseCase<T>
     where T : BaseEntity
     {
-        private readonly BaseRepository<T> _repository = repo;
+        private readonly IBaseRepository<T> _repository = repo;
 
         public T Execute(T input)
         {

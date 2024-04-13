@@ -1,6 +1,7 @@
 ﻿using basic_api.Application.Order.Facade;
 using basic_api.Controllers;
 using basic_api.Domain.Order.Controller;
+using basic_api.Domain.Order.Facade;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,29 @@ namespace basic_api.Application.Order.Controller
 {
     [ApiController]
     [Route("orders")]
-    public class OrderController(OrderFacade facade) : Controller<OrderModel>(facade), IOrderController
+    public class OrderController : Controller<OrderModel>, IOrderController, IDisposable
     {
-        private readonly OrderFacade _facade = facade;
+        private readonly IOrderFacade _facade;
+
+        private readonly Timer _timer;
+        public OrderController(IOrderFacade facade) : base(facade)
+        {
+            _facade = facade;
+            int intervalo = 60000 * 60 * 24; // 24 hrs
+
+            _timer = new Timer(VerifyOrders, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(intervalo));
+
+        }
 
         [HttpGet(Name = "stocks")]
         public async Task<IEnumerable<StockModel>> AccessOrderStooks(Guid user, Guid order)
         {
             return await _facade.AccessOrderStooks(user, order);
+        }
+
+        public  void VerifyOrders(object state)
+        {
+             _facade.VerifyOrdersStatus().Wait();
         }
 
         [HttpPost(Name = "devolve")]
@@ -26,15 +42,29 @@ namespace basic_api.Application.Order.Controller
         }
 
         [HttpPost(Name = "")]
-        public OrderModel Insert(Guid userId, IEnumerable<OrderParams> books)
+        public async Task<OrderModel> Insert(Guid userId, IEnumerable<OrderParams> books)
         {
-            return _facade.Insert(userId, books);
+            return await _facade.Insert(userId, books);
         }
 
         [HttpPost(Name = "Reply")]
         public async Task<OrderModel> Reply(bool accept, Guid order)
         {
             return await _facade.Reply(accept, order);
+        }
+
+        void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _timer?.Dispose();
+            }
+        }
+
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

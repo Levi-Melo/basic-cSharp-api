@@ -1,24 +1,25 @@
-﻿using basic_api.Application.Stock.UseCases;
+﻿using basic_api.Data.Repositories;
+using basic_api.Domain.Stock.UseCases;
 using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Domain.Order.UseCases
 {
-    public class DevolveOrderUseCase(OrderRepository repo, StockUpdateUseCase updateStock) : IDevolveOrderUseCase
+    public class DevolveOrderUseCase(IOrderRepository repo, IStockUpdateUseCase updateStock) : IDevolveOrderUseCase
     {
-        private readonly StockUpdateUseCase _updateStock = updateStock;
-        private readonly OrderRepository _repo = repo;
+        private readonly IStockUpdateUseCase _updateStock = updateStock;
+        private readonly IOrderRepository _repo = repo;
         public async Task<OrderModel> Execute(Guid order, IEnumerable<StockModel> stocks)
         {
+            _repo.BeginTransaction();
             var orderParams = new OrderModel()
             {
                 Id = order,
                 Deleted = false
             };
             var foundOrder = _repo.Get(orderParams);
-            foreach (var stock in stocks) 
+            foreach (var stock in foundOrder.StockBooks) 
             {
-                if(foundOrder.StockBooks.Any(item => item.Id == stock.Id))
+                if(!stocks.Any(item => item.Id == stock.Id))
                 {
                     foundOrder.Devolved = false;
                 }
@@ -29,7 +30,11 @@ namespace basic_api.Domain.Order.UseCases
                 }
                 foundOrder.Devolved ??= true;
             }
-            return _repo.Update(foundOrder);
+            var result = _repo.Update(foundOrder);
+            
+            _repo.Commit();
+            
+            return result;
         }
     }
 }

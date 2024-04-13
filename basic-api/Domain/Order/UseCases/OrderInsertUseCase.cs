@@ -7,7 +7,7 @@ namespace basic_api.Domain.Order.UseCases
     {
         Task<OrderModel> ExecuteAsync(Guid userId, IEnumerable<OrderParams> books);
     }
-    public struct OrderParams
+    public record OrderParams
     {
         public Guid book;
 

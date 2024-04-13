@@ -1,17 +1,18 @@
 ﻿using BCrypt.Net;
 using basic_api.Domain.Account.UseCases;
 using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
-using basic_api.Infrastructure.Services;
 using basic_api.Data.Entities.Enum;
+using basic_api.Data.Repositories;
+using basic_api.Data.Services;
+using basic_api.Infrastructure.Utils;
 
 namespace basic_api.Application.Account.UseCases
 {
-    public class AccountSignInUseCase(AccountRepository repo, AuthService<AuthPayload> authService) : IAccountSignInUseCase
+    public class AccountSignInUseCase(IAccountRepository repo, IAuthService<AuthPayload> authService) : IAccountSignInUseCase
     {
-        private readonly AccountRepository _repo = repo;
+        private readonly IAccountRepository _repo = repo;
         
-        private readonly AuthService<AuthPayload> _authService = authService;
+        private readonly IAuthService<AuthPayload> _authService = authService;
         public string Execute(string email, string password)
         {
             var search = new AccountModel() 
@@ -37,7 +38,7 @@ namespace basic_api.Application.Account.UseCases
 
 
     }
-    public struct AuthPayload
+    public record AuthPayload : RecordMarker
     {
         public Guid Id;
         public Guid TenantId;

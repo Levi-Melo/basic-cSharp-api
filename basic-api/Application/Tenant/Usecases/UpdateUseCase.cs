@@ -1,13 +1,12 @@
 using basic_api.Data.Entities;
-using basic_api.Domain.Base.UseCases;
-using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
+using basic_api.Data.Repositories;
+using basic_api.Domain.Tenant.UseCases;
 
-namespace basic_api.Application.Base.UseCase
+namespace basic_api.Application.Tenant.UseCases
 {
-    public class TenantUpdateUseCase(TenantenantRepository repo) : ITenantUpdateUseCase
+    public class TenantUpdateUseCase(ITenantRepository repo) : ITenantUpdateUseCase
     {
-        private readonly TenantenantRepository _repository = repo;
+        private readonly ITenantRepository _repository = repo;
 
         public ITenant Execute(ITenant input)
         {

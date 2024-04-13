@@ -1,16 +1,15 @@
-using basic_api.Application.Base;
 using basic_api.Data.Entities;
-using basic_api.Domain.Base.Controller;
-using basic_api.Domain.Base.Facade;
+using basic_api.Domain.Tenant.Controller;
+using basic_api.Domain.Tenant.Facade;
 using Microsoft.AspNetCore.Mvc;
 
-namespace basic_api.Controllers
+namespace basic_api.Application.Tenant.Controllers
 {
     [ApiController]
     [Route("tenants")]
-    public class TenantController(TenantFacade facade) : ITenantController
+    public class TenantController(ITenantFacade facade) : ITenantController
     {
-        private readonly TenantFacade _facade = facade;
+        private readonly ITenantFacade _facade = facade;
 
         [HttpGet(Name = "")]
         public ITenant Get(ITenant input)

@@ -1,13 +1,13 @@
 ﻿using basic_api.Application.Base.UseCase;
+using basic_api.Data.Repositories;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class OrderDeleteUseCase(OrderRepository repo) : DeleteUseCase<OrderModel>(repo), IOrderDeleteUseCase
+    public class OrderDeleteUseCase(IOrderRepository repo) : DeleteUseCase<OrderModel>(repo), IOrderDeleteUseCase
     {
-        private readonly OrderRepository _repo = repo;
+        private readonly IOrderRepository _repo = repo;
         public new void Execute(OrderModel entity)
         {
             var found = _repo.Get(entity);
@@ -22,10 +22,12 @@ namespace basic_api.Application.Order.UseCases
 
         public new void Execute(IEnumerable<OrderModel> input)
         {
-            foreach(var entity in input)
+            _repo.BeginTransaction();
+            foreach (var entity in input)
             {
                 Execute(entity);
             }
+            _repo.Commit();
         }
     }
 }

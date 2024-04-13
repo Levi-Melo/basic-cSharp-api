@@ -1,19 +1,19 @@
-﻿using basic_api.Application.Account.UseCases;
-using basic_api.Application.Base.UseCase;
-using basic_api.Application.Book.UseCases;
+﻿using basic_api.Application.Base.UseCase;
+using basic_api.Data.Repositories;
+using basic_api.Data.Services;
+using basic_api.Domain.Account.UseCases;
+using basic_api.Domain.Book.UseCases;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
-using basic_api.Infrastructure.Database.Repositories;
-using basic_api.Infrastructure.Services;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class OrderInsertUseCase(OrderRepository repo, AccountGetUseCase getAccount, BookGetUseCase getBook, EmailService emailService) : InsertUseCase<OrderModel>(repo), IOrderInsertUseCase
+    public class OrderInsertUseCase(IOrderRepository repo, IAccountGetUseCase getAccount, IBookGetUseCase getBook, IEmailService emailService) : InsertUseCase<OrderModel>(repo), IOrderInsertUseCase
     {
-        private readonly EmailService _emailService = emailService;
-        private readonly AccountGetUseCase _getAccount = getAccount;
-        private readonly OrderRepository _repo = repo;
-        private readonly BookGetUseCase _getBook = getBook;
+        private readonly IEmailService _emailService = emailService;
+        private readonly IAccountGetUseCase _getAccount = getAccount;
+        private readonly IOrderRepository _repo = repo;
+        private readonly IBookGetUseCase _getBook = getBook;
 
         public async Task<OrderModel> ExecuteAsync(Guid userId, IEnumerable<OrderParams> books)
         {
@@ -23,12 +23,8 @@ namespace basic_api.Application.Order.UseCases
                 Deleted = false
             };
 
-            var validUser = IsValidUser(user);
-
-            if (validUser == null)
-            {
-                throw new Exception();
-            };
+            var validUser = IsValidUser(user) ?? throw new Exception();
+            ;
 
             var searchedBookParams = new List<BookModel>();
 
