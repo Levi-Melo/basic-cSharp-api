@@ -1,4 +1,5 @@
 ﻿using basic_api.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace basic_api.Infrastructure.Database.Models
 {
@@ -13,5 +14,7 @@ namespace basic_api.Infrastructure.Database.Models
         public bool HaveFile { get; set; }
 
         public bool Reserved { get; set; }
+
+        public IEnumerable<OrderModel>? Orders { get; set; }
     }
 }

@@ -8,5 +8,5 @@ public class LocationModel : BaseEntity, ILocation
 
     public object Metadata { get; set; }
 
-    public IEnumerable<BookModel> Books { get; set; }
+    public IEnumerable<StockModel> Books { get; set; }
 }

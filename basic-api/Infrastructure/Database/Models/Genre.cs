@@ -7,5 +7,8 @@ namespace basic_api.Infrastructure.Database.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public IEnumerable<BookModel> Books { get; set; }
+
+        public IEnumerable<WriterModel> Writers { get; set; }
+
     }
 }

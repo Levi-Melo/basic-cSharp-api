@@ -30,6 +30,8 @@ namespace basic_api.Infrastructure.Database.Models
 
         public WriterModel? Translator { get; set; }
         
+        public IEnumerable<OrderModel>? Orders { get; set; }
+        
         public IEnumerable<GenreModel> Genres { get; set; }
     }
 }
