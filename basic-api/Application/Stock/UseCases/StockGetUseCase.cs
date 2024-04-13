@@ -1,17 +1,16 @@
 ﻿using basic_api.Application.Base.UseCase;
 using basic_api.Infrastructure.Database.Models;
 using basic_api.Domain.Stock.UseCases;
-using basic_api.Application.Book.UseCases;
-using basic_api.Infrastructure.Services;
 using basic_api.Data.Repositories;
 using basic_api.Data.Services;
+using basic_api.Domain.Book.UseCases;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockGetUseCase(IStockRepository repo, IFileService fileService, BookGetUseCase getBook) : GetUseCase<StockModel>(repo), IStockGetUseCase
+    public class StockGetUseCase(IStockRepository repo, IFileService fileService, IBookGetUseCase getBook) : GetUseCase<StockModel>(repo), IStockGetUseCase
     {
         private readonly IFileService _fileService = fileService;
-        private readonly BookGetUseCase _getBook = getBook;
+        private readonly IBookGetUseCase _getBook = getBook;
         new public async Task<StockModel> Execute(StockModel input)
         {
             var bookParam = new BookModel() 

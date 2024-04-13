@@ -10,49 +10,49 @@ namespace basic_api.Controllers
     {
         private readonly IFacade<T> _facade = facade;
 
-        [HttpGet(Name = "")]
+        [HttpGet, Route("[controller]")]
         public T Get(T input)
         {
             return _facade.Get(input);
         }
 
-        [HttpGet(Name = "")]
+        [HttpGet, Route("[controller]/many")]
         public IEnumerable<T> Get(IEnumerable<T> input)
         {
             return _facade.Get(input);
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost, Route("[controller]")]
         public T Insert(T entity)
         {
             return _facade.Insert(entity);
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost, Route("[controller]/many")]
         public IEnumerable<T> Insert(IEnumerable<T> entity)
         {
             return _facade.Insert(entity);
         }
 
-        [HttpPatch(Name = "")]
+        [HttpPatch, Route("[controller]")]
         public T Update(T entity)
         {
             return _facade.Update(entity);
         }
 
-        [HttpPatch(Name = "")]
+        [HttpPatch, Route("[controller]/many")]
         public IEnumerable<T> Update(IEnumerable<T> input)
         {
             return _facade.Update(input);
         }
 
-        [HttpDelete(Name = "")]
+        [HttpDelete, Route("[controller]")]
         public void Delete(T entity)
         {
             _facade.Delete(entity);
         }
 
-        [HttpDelete(Name = "")]
+        [HttpDelete, Route("[controller]/many")]
         public void Delete(IEnumerable<T> input)
         {
             _facade.Delete(input);

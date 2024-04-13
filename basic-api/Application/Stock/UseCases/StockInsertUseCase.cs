@@ -1,16 +1,16 @@
 ﻿using basic_api.Application.Base.UseCase;
-using basic_api.Application.Book.UseCases;
 using basic_api.Data.Repositories;
 using basic_api.Data.Services;
+using basic_api.Domain.Book.UseCases;
 using basic_api.Domain.Stock.UseCases;
 using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Application.Stock.UseCases
 {
-    public class StockInsertUseCase(IStockRepository repo, IFileService fileService, BookGetUseCase getBook) : InsertUseCase<StockModel>(repo), IStockInsertUseCase
+    public class StockInsertUseCase(IStockRepository repo, IFileService fileService, IBookGetUseCase getBook) : InsertUseCase<StockModel>(repo), IStockInsertUseCase
     {
         private readonly IFileService _fileService = fileService;
-        private readonly BookGetUseCase _getBook = getBook;
+        private readonly IBookGetUseCase _getBook = getBook;
 
         public new async Task<StockModel> Execute(StockModel input)
         {

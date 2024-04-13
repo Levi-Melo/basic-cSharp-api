@@ -7,7 +7,7 @@ using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Infrastructure.Database.Repositories
 {
-    public abstract class TenantRepository(DataContext context) : ITenantRepository
+    public class TenantRepository(DataContext context) : ITenantRepository
     {
 
         protected DbSet<ITenant> _dbSet = context.Set<ITenant>();

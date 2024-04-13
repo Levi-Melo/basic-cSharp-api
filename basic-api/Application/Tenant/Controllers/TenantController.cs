@@ -11,49 +11,49 @@ namespace basic_api.Application.Tenant.Controllers
     {
         private readonly ITenantFacade _facade = facade;
 
-        [HttpGet(Name = "")]
+        [HttpGet, Route("[controller]")]
         public ITenant Get(ITenant input)
         {
             return _facade.Get(input);
         }
 
-        [HttpGet(Name = "")]
+        [HttpGet, Route("[controller]/many")]
         public IEnumerable<ITenant> Get(IEnumerable<ITenant> input)
         {
             return _facade.Get(input);
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost, Route("[controller]")]
         public ITenant Insert(ITenant entity)
         {
             return _facade.Insert(entity);
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost, Route("[controller]/many")]
         public IEnumerable<ITenant> Insert(IEnumerable<ITenant> entity)
         {
             return _facade.Insert(entity);
         }
 
-        [HttpPatch(Name = "")]
+        [HttpPatch, Route("[controller]")]
         public ITenant Update(ITenant entity)
         {
             return _facade.Update(entity);
         }
 
-        [HttpPatch(Name = "")]
+        [HttpPatch, Route("[controller]/many")]
         public IEnumerable<ITenant> Update(IEnumerable<ITenant> input)
         {
             return _facade.Update(input);
         }
 
-        [HttpDelete(Name = "")]
+        [HttpDelete, Route("[controller]")]
         public void Delete(ITenant entity)
         {
             _facade.Delete(entity);
         }
 
-        [HttpDelete(Name = "")]
+        [HttpDelete, Route("[controller]/many")]
         public void Delete(IEnumerable<ITenant> input)
         {
             _facade.Delete(input);

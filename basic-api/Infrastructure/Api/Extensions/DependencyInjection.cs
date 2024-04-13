@@ -54,6 +54,9 @@ using basic_api.Domain.Tenant.Facade;
 using basic_api.Domain.Tenant.Controller;
 using basic_api.Infrastructure.Database.Context;
 using Microsoft.EntityFrameworkCore;
+using Amazon.S3;
+using Amazon;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace basic_api.Infrastructure.Api.Extensions
@@ -67,12 +70,50 @@ namespace basic_api.Infrastructure.Api.Extensions
                 serviceCollection.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+
                 // Services
-                serviceCollection.AddScoped<IFileService, FileService>();
-                serviceCollection.AddScoped<IAuthService<AuthPayload>, AuthService<AuthPayload>>();
-                serviceCollection.AddScoped<IEmailService, EmailService>();
+                serviceCollection.AddTransient<IFileService, FileService>(sp =>
+                {
+                    var s3Client = new AmazonS3Client()
+                    {
+                        Config =
+                        {
+                            //adicionar configuração
+                        }
+                    };
+                    return new FileService(s3Client, configuration.GetConnectionString("DefaultAwsBucket"), configuration.GetConnectionString("DefaultAwsDirectory"));
+                });
+
+                serviceCollection.AddTransient<IAuthService<AuthPayload>, AuthService<AuthPayload>>(sp =>
+                {
+                    var s3Client = new AmazonS3Client()
+                    {
+                        Config =
+                            {
+                                //adicionar configuração
+                            }
+                    };
+                    return new AuthService<AuthPayload>(configuration, 60 * 24);
+                });
+
+                serviceCollection.AddTransient<IEmailService, EmailService>(sp =>
+                {
+                    var s3Client = new AmazonS3Client()
+                    {
+                        Config =
+                                {
+                                    //adicionar configuração
+                                }
+                    };
+                    return new EmailService(
+                        configuration.GetConnectionString("SmtpServer"),
+                        int.Parse(configuration.GetConnectionString("SmtpPort")),
+                        configuration.GetConnectionString("UserName"),
+                        configuration.GetConnectionString("UserPassword"));
+                });
 
                 // Repositories
+                serviceCollection.AddScoped<ITenantRepository, TenantRepository>();
                 serviceCollection.AddScoped<IAccountRepository, AccountRepository>();
                 serviceCollection.AddScoped<IBookRepository, BookRepository>();
                 serviceCollection.AddScoped<IGenreRepository, GenreRepository>();
@@ -81,7 +122,6 @@ namespace basic_api.Infrastructure.Api.Extensions
                 serviceCollection.AddScoped<IPublisherRepository, PublisherRepository>();
                 serviceCollection.AddScoped<IRoleRepository, RoleRepository>();
                 serviceCollection.AddScoped<IStockRepository, StockRepository>();
-                serviceCollection.AddScoped<ITenantRepository, TenantRepository>();
                 serviceCollection.AddScoped<IWriterRepository, WriterRepository>();
 
                 // UseCases
@@ -143,7 +183,8 @@ namespace basic_api.Infrastructure.Api.Extensions
                 serviceCollection.AddScoped<IAccessOrderStooksUseCase, AccessOrderStooksUseCase>();
                 serviceCollection.AddScoped<IDevolveOrderUseCase, DevolveOrderUseCase>();
                 serviceCollection.AddScoped<IReplyOrderUseCase, ReplyOrderUseCase>();
-
+                serviceCollection.AddScoped<IVerifyStatusOrderUsecase, VerifyStatusOrderUsecase>();
+            
 
                 // Facades
                 serviceCollection.AddScoped<IAccountFacade, AccountFacade>();

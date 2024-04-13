@@ -1,14 +1,14 @@
 ﻿using basic_api.Infrastructure.Database.Models;
 using basic_api.Domain.Order.UseCases;
-using basic_api.Application.Stock.UseCases;
 using basic_api.Data.Repositories;
+using basic_api.Domain.Stock.UseCases;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class AccessOrderStooksUseCase(IOrderRepository repo, StockGetUseCase getStock ) : IAccessOrderStooksUseCase
+    public class AccessOrderStooksUseCase(IOrderRepository repo, IStockGetUseCase getStock ) : IAccessOrderStooksUseCase
     {
         private readonly IOrderRepository _repo = repo;
-        private readonly StockGetUseCase _getStock = getStock;
+        private readonly IStockGetUseCase _getStock = getStock;
         public async Task<IEnumerable<StockModel>> Execute(Guid user, Guid order)
         {
             var userParams = new AccountModel()

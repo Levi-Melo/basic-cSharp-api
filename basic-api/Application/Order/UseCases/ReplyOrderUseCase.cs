@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace basic_api.Application.Order.UseCases
 {
-    public class ReplyOrderUseCase(IOrderRepository repo, IStockGetUseCase getStock, IStockUpdateUseCase updateUseCase, IOrderGetUseCase getOrder, IEmailService emailService, IAccountGetUseCase getAccount, IHubContext hub) : IReplyOrderUseCase
+    public class ReplyOrderUseCase(IOrderRepository repo, IStockGetUseCase getStock, IStockUpdateUseCase updateUseCase, IOrderGetUseCase getOrder, IEmailService emailService, IAccountGetUseCase getAccount) : Hub, IReplyOrderUseCase
     {
-        private readonly IHubContext _hub = hub;
         private readonly IAccountGetUseCase _getAccount = getAccount;
         private readonly IStockUpdateUseCase _updateUseCase = updateUseCase;
         private readonly IOrderGetUseCase _getOrder = getOrder;
@@ -78,7 +77,7 @@ namespace basic_api.Application.Order.UseCases
                     stock.Reserved = true;
                 }
                 await _updateUseCase.Execute(orderItem.StockBooks);
-                await _hub.Clients.All.SendAsync($"{orderItem.Tenant.Id}-reserveds", orderItem.StockBooks);
+                await Clients.All.SendAsync($"{orderItem.Tenant.Id}-reserveds", orderItem.StockBooks);
             }
 
             orderItem.Accept = accept;

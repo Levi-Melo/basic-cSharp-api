@@ -24,7 +24,7 @@ namespace basic_api.Application.Order.Controller
 
         }
 
-        [HttpGet(Name = "stocks")]
+        [HttpGet, Route("[controller]/stocks")]
         public async Task<IEnumerable<StockModel>> AccessOrderStooks(Guid user, Guid order)
         {
             return await _facade.AccessOrderStooks(user, order);
@@ -35,19 +35,19 @@ namespace basic_api.Application.Order.Controller
              _facade.VerifyOrdersStatus().Wait();
         }
 
-        [HttpPost(Name = "devolve")]
+        [HttpPost, Route("[controller]/devolve")]
         public async Task<OrderModel> Devolve(Guid order, IEnumerable<StockModel> stocks)
         {
             return await _facade.Devolve(order, stocks);
         }
 
-        [HttpPost(Name = "")]
+        [HttpPost, Route("[controller]")]
         public async Task<OrderModel> Insert(Guid userId, IEnumerable<OrderParams> books)
         {
             return await _facade.Insert(userId, books);
         }
 
-        [HttpPost(Name = "Reply")]
+        [HttpPost, Route("[controller]/Reply")]
         public async Task<OrderModel> Reply(bool accept, Guid order)
         {
             return await _facade.Reply(accept, order);

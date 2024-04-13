@@ -4,10 +4,10 @@ using basic_api.Data.Services;
 using basic_api.Infrastructure.Services;
 namespace basic_api.Infrastructure.Api.Middlewares
 {
-    public class EnsureAdminMiddleware(RequestDelegate next, AuthService<AuthPayload> authService)
+    public class EnsureAdminMiddleware(RequestDelegate next, IAuthService<AuthPayload> authService)
     {
         private readonly RequestDelegate _next = next;
-        private readonly AuthService<AuthPayload> _authService = authService;
+        private readonly IAuthService<AuthPayload> _authService = authService;
 
         // Método do middleware que usa o serviço de autenticação
         public async Task InvokeAsync(HttpContext context)
