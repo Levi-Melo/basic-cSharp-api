@@ -25,7 +25,7 @@ namespace basic_api.Infrastructure.Database.Repositories
 
                 entity.HasOne(e => e.Item).WithMany().HasForeignKey(e => e.Item.Id);
                 entity.HasOne(e => e.Location).WithMany().HasForeignKey(e => e.Location.Id);
-                entity.HasMany(e => e.orders).WithMany(e => e.StockBooks).UsingEntity(j => j.ToTable("OrderStockBooks"));
+                entity.HasMany(e => e.Orders).WithMany(e => e.StockBooks).UsingEntity(j => j.ToTable("OrderStockBooks"));
                 entity.HasOne(e => e.Tenant).WithMany().HasForeignKey(j => j.Tenant.Id);
             });
 
