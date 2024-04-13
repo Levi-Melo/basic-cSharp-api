@@ -20,5 +20,11 @@ namespace basic_api.Data.Repositories
         void Delete(T entity);
 
         void Delete(IEnumerable<T> input);
+        
+        void BeginTransaction();
+        
+        void Commit();
+        
+        void Rollback();
     }
 }
