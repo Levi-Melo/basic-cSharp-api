@@ -113,7 +113,7 @@ namespace basic_api.Infrastructure.Database.Context
            throw new NotImplementedException();
         }
 
-        private struct UpdateData
+        private record UpdateData
         {
             public DateTime timestamp;
             public Guid operationId;
