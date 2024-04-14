@@ -47,7 +47,7 @@ namespace basic_api.Application.Order.Controller
             return await _facade.Insert(userId, books);
         }
 
-        [HttpPost, Route("[controller]/Reply")]
+        [HttpPost, Route("[controller]/reply")]
         public async Task<OrderModel> Reply(bool accept, Guid order)
         {
             return await _facade.Reply(accept, order);

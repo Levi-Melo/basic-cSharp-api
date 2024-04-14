@@ -2,6 +2,7 @@ using basic_api.Infrastructure.Api.Extensions;
 using basic_api.Infrastructure.Api.Middlewares;
 using basic_api.Infrastructure.Database.Context;
 using Microsoft.Extensions.Configuration;
+using System.Reflection.PortableExecutable;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,48 +18,24 @@ builder.Services.Inject(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseMiddleware<AuthMiddleware>();
+app.MapWhen(context =>
+       !context.Request.Path.StartsWithSegments("/accounts/signIn") &&
+       !context.Request.Path.StartsWithSegments("/swagger"),
+       builder => builder.UseMiddleware<AuthMiddleware>());
 
 
-app.MapWhen(context => !context.Request.Path.StartsWithSegments("/accounts/signIn"), appBuilder =>
-{
-    appBuilder.UseRouting();
-    appBuilder.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
-});
-
-
-app.UseMiddleware<EnsureOperatorMiddleware>();
+app.MapWhen(context =>
+       context.Request.Path.StartsWithSegments("/orders/reply") ||
+       context.Request.Path.StartsWithSegments("/orders/devolve") ||
+       context.Request.Path.StartsWithSegments("/orders/stocks"),
+       builder => builder.UseMiddleware<EnsureOperatorMiddleware>());
 
 app.MapWhen(
-    context => !context.Request.Method.Equals("GET", StringComparison.CurrentCultureIgnoreCase) || 
-    context.Request.Path.StartsWithSegments("/accounts/signIn") || 
-    !(context.Request.Path.StartsWithSegments("/accounts") && context.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase)), 
-    appBuilder =>
-    {
-    appBuilder.UseRouting();
-    appBuilder.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
-});
+    context =>
+    context.Request.Path.StartsWithSegments("/accounts") &&
+    context.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase),
+    appBuilder => appBuilder.UseMiddleware<EnsureAdminMiddleware>());
 
-
-app.UseMiddleware<EnsureAdminMiddleware>();
-app.MapWhen(
-    context => !context.Request.Method.Equals("GET", StringComparison.CurrentCultureIgnoreCase) || 
-    !context.Request.Path.StartsWithSegments("/accounts/signIn") || 
-    (context.Request.Path.StartsWithSegments("/accounts") && context.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase)), 
-    appBuilder =>
-{
-    appBuilder.UseRouting();
-    appBuilder.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
-});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

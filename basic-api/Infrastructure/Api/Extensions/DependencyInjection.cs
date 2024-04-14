@@ -55,8 +55,8 @@ using basic_api.Domain.Tenant.Controller;
 using basic_api.Infrastructure.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
+using Amazon.Runtime;
 using Amazon;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace basic_api.Infrastructure.Api.Extensions
@@ -74,25 +74,17 @@ namespace basic_api.Infrastructure.Api.Extensions
                 // Services
                 serviceCollection.AddTransient<IFileService, FileService>(sp =>
                 {
-                    var s3Client = new AmazonS3Client()
+                    BasicAWSCredentials creds = new(configuration.GetConnectionString("AccessKeyID"), configuration.GetConnectionString("secretAccessKeyID"));
+
+                    var s3Client = new AmazonS3Client(creds, new AmazonS3Config
                     {
-                        Config =
-                        {
-                            //adicionar configuração
-                        }
-                    };
+                        RegionEndpoint = RegionEndpoint.USEast1,
+                    });
                     return new FileService(s3Client, configuration.GetConnectionString("DefaultAwsBucket"), configuration.GetConnectionString("DefaultAwsDirectory"));
                 });
 
                 serviceCollection.AddTransient<IAuthService<AuthPayload>, AuthService<AuthPayload>>(sp =>
                 {
-                    var s3Client = new AmazonS3Client()
-                    {
-                        Config =
-                            {
-                                //adicionar configuração
-                            }
-                    };
                     return new AuthService<AuthPayload>(configuration, 60 * 24);
                 });
 

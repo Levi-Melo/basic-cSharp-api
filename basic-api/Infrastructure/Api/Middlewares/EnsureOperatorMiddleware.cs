@@ -32,7 +32,7 @@ namespace basic_api.Infrastructure.Api.Middlewares
             try
             {
                 var usuario = _authService.Verify(token);
-                if(usuario.role != RoleNameEnum.Operator)
+                if(usuario.role != RoleNameEnum.Operator && usuario.role != RoleNameEnum.Administrator)
                 {
                     throw new Exception();
                 }
