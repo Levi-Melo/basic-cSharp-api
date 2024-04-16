@@ -6,7 +6,7 @@ namespace basic_api.Data.Repositories
     {
         ITenant Get(ITenant input);
 
-        IEnumerable<ITenant> Get(IEnumerable<ITenant> input);
+        IEnumerable<ITenant> Get(GetManyParams<ITenant> input);
 
         ITenant Insert(ITenant entity);
 
@@ -18,6 +18,6 @@ namespace basic_api.Data.Repositories
 
         void Delete(ITenant entity);
 
-        void Delete(IEnumerable<ITenant> input);
+        void Delete(GetManyParams<ITenant> input);
     }
 }

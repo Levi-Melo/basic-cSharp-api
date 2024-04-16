@@ -1,4 +1,5 @@
 using basic_api.Data.Entities;
+using basic_api.Data.Repositories;
 
 namespace basic_api.Domain.Tenant.Controller
 {
@@ -6,7 +7,7 @@ namespace basic_api.Domain.Tenant.Controller
     {
         ITenant Get(ITenant input);
 
-        IEnumerable<ITenant> Get(IEnumerable<ITenant> input);
+        IEnumerable<ITenant> Get(GetManyParams<ITenant> input);
         
         ITenant Insert(ITenant entity);
         
@@ -18,6 +19,6 @@ namespace basic_api.Domain.Tenant.Controller
 
         void Delete(ITenant entity);
 
-        void Delete(IEnumerable<ITenant> input);
+        void Delete(GetManyParams<ITenant> input);
     }
 }

@@ -37,8 +37,8 @@ namespace basic_api.Application.Order.UseCases
             }
             else
             {
-                var isBefor = DateTime.Compare((DateTime)foundOrder.DevolveAt, DateTime.Now);
-                if(isBefor < 0) {
+                var isBefore = DateTime.Compare((DateTime)foundOrder.DevolveAt, DateTime.Now);
+                if(isBefore < 0) {
                     throw new Exception();
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using basic_api.Data.Entities.Base;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace basic_api.Data.Repositories
 {
@@ -7,7 +8,7 @@ namespace basic_api.Data.Repositories
     {
         T Get(T input);
 
-        IEnumerable<T> Get(IEnumerable<T> input);
+        IEnumerable<T> Get(GetManyParams<T> input);
         
         T Insert(T entity);
         
@@ -26,5 +27,12 @@ namespace basic_api.Data.Repositories
         void Commit();
         
         void Rollback();
+    }
+    public record GetManyParams<T>
+    {
+        public IEnumerable<T>? Where;
+        public int? Page = 1;
+        public int? Size = 10;
+        public bool? NotPage;
     }
 }

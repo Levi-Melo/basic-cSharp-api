@@ -15,9 +15,9 @@ namespace basic_api.Application.Base.UseCase
            return _repository.Get(input);
         }
 
-        public IEnumerable<T> Execute(IEnumerable<T> input)
+        public IEnumerable<T> Execute(GetManyParams<T> input)
         {
-           return _repository.Get(input);
+            return _repository.Get(input);
         }
     }
 }

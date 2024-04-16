@@ -1,6 +1,7 @@
 using basic_api.Domain.Base.UseCases;
 using basic_api.Domain.Base.Facade;
 using basic_api.Infrastructure.Database.Models;
+using basic_api.Data.Repositories;
 
 namespace basic_api.Application.Base
 {
@@ -32,7 +33,7 @@ namespace basic_api.Application.Base
             return _getUseCase.Execute(input);
         }
 
-        public IEnumerable<T> Get(IEnumerable<T> input)
+        public IEnumerable<T> Get(GetManyParams<T> input)
         {
             return _getUseCase.Execute(input);
         }

@@ -175,7 +175,7 @@ namespace basic_api.Infrastructure.Api.Extensions
                 serviceCollection.AddScoped<IAccessOrderStooksUseCase, AccessOrderStooksUseCase>();
                 serviceCollection.AddScoped<IDevolveOrderUseCase, DevolveOrderUseCase>();
                 serviceCollection.AddScoped<IReplyOrderUseCase, ReplyOrderUseCase>();
-                serviceCollection.AddScoped<IVerifyStatusOrderUsecase, VerifyStatusOrderUsecase>();
+                serviceCollection.AddScoped<IVerifyStatusOrderUsecase, VerifyStatusOrderUseCase>();
             
 
                 // Facades

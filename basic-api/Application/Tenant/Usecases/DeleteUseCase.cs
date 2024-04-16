@@ -14,7 +14,7 @@ namespace basic_api.Application.Tenant.UseCases
             _repository.Delete(entity);
         }
 
-        public void Execute(IEnumerable<ITenant> input)
+        public void Execute(GetManyParams<ITenant> input)
         {
             _repository.Delete(input);
         }

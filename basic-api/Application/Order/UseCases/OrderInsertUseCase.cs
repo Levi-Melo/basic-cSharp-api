@@ -39,7 +39,12 @@ namespace basic_api.Application.Order.UseCases
                 searchedBookParams.Add(Book);
             }
 
-            var foundBooks = _getBook.Execute(searchedBookParams);
+            GetManyParams<BookModel> param = new()
+            {
+                Where = searchedBookParams
+            };
+
+            var foundBooks = _getBook.Execute(param);
 
             if (foundBooks.Count() != books.Count())
             {
@@ -79,7 +84,12 @@ namespace basic_api.Application.Order.UseCases
             };
 
 
-            var foundOrders = _repo.Get([expiredOrder, activeOrder]);
+            GetManyParams<OrderModel> param = new()
+            {
+                Where = [expiredOrder, activeOrder],
+                NotPage = true
+            };
+            var foundOrders = _repo.Get(param);
 
             if (foundOrders.Any())
             {

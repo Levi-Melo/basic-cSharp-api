@@ -1,4 +1,5 @@
 using basic_api.Data.Entities;
+using basic_api.Data.Repositories;
 
 namespace basic_api.Domain.Tenant.UseCases
 {
@@ -6,6 +7,6 @@ namespace basic_api.Domain.Tenant.UseCases
     {
         ITenant Execute(ITenant entity);
 
-        IEnumerable<ITenant> Execute(IEnumerable<ITenant> input);
+        IEnumerable<ITenant> Execute(GetManyParams<ITenant> input);
     }
 }

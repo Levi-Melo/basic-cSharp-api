@@ -1,4 +1,5 @@
 using basic_api.Data.Entities;
+using basic_api.Data.Repositories;
 using basic_api.Domain.Tenant.Facade;
 using basic_api.Domain.Tenant.UseCases;
 
@@ -21,7 +22,7 @@ namespace basic_api.Application.Tenant.Facade
             _deleteUseCase.Execute(entity);
         }
 
-        public void Delete(IEnumerable<ITenant> input)
+        public void Delete(GetManyParams<ITenant> input)
         {
             _deleteUseCase.Execute(input);
         }
@@ -31,7 +32,7 @@ namespace basic_api.Application.Tenant.Facade
             return _getUseCase.Execute(input);
         }
 
-        public IEnumerable<ITenant> Get(IEnumerable<ITenant> input)
+        public IEnumerable<ITenant> Get(GetManyParams<ITenant> input)
         {
             return _getUseCase.Execute(input);
         }

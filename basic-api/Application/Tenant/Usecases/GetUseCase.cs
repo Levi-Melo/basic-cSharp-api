@@ -13,7 +13,7 @@ namespace basic_api.Application.Tenant.UseCases
            return _repository.Get(input);
         }
 
-        public IEnumerable<ITenant> Execute(IEnumerable<ITenant> input)
+        public IEnumerable<ITenant> Execute(GetManyParams<ITenant> input)
         {
            return _repository.Get(input);
         }

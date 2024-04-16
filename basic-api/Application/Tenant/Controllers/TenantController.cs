@@ -1,4 +1,5 @@
 using basic_api.Data.Entities;
+using basic_api.Data.Repositories;
 using basic_api.Domain.Tenant.Controller;
 using basic_api.Domain.Tenant.Facade;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace basic_api.Application.Tenant.Controllers
         }
 
         [HttpGet, Route("[controller]/many")]
-        public IEnumerable<ITenant> Get(IEnumerable<ITenant> input)
+        public IEnumerable<ITenant> Get(GetManyParams<ITenant> input)
         {
             return _facade.Get(input);
         }
@@ -54,7 +55,7 @@ namespace basic_api.Application.Tenant.Controllers
         }
 
         [HttpDelete, Route("[controller]/many")]
-        public void Delete(IEnumerable<ITenant> input)
+        public void Delete(GetManyParams<ITenant> input)
         {
             _facade.Delete(input);
         }

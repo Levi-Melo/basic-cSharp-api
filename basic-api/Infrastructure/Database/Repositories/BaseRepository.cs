@@ -20,19 +20,27 @@ namespace basic_api.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        protected BaseRepository()
-        {
-        }
-
         public DbContext GetContext()
         {
             return _context;
         }
 
-        public IEnumerable<T> Get(IEnumerable<T> input)
+        public IEnumerable<T> Get(GetManyParams<T> input)
         {
-            return
-               [.. Get(true).Where(p => BaseRepository<T>.ContainsProperties(p, input))];
+            var query = Get(true);
+            if(input.Where != null){
+                query = query.Where(p => BaseRepository<T>.ContainsProperties(p, input.Where));
+            }
+
+            if (input.Where != null)
+            {
+                query = query.Where(p => BaseRepository<T>.ContainsProperties(p, input.Where));
+            }
+            if (input.NotPage == null)
+            {
+                query = query.Skip((int)((input.Page - 1) * input.Size)).Take((int)input.Size);
+            }
+            return query.ToList();
         }
 
         public T Get(T input)
@@ -80,7 +88,12 @@ namespace basic_api.Infrastructure.Database.Repositories
 
         public void Delete(IEnumerable<T> input)
         {
-            var entities = Get(input);
+            var param = new GetManyParams<T>()
+            {
+                Where = input,
+                NotPage = true
+            };
+            var entities = Get(param);
             Remove(entities);
         }
         
@@ -126,7 +139,7 @@ namespace basic_api.Infrastructure.Database.Repositories
             _transaction.Rollback();
         }
 
-        private static bool ContainsProperties(T instance, T validationItem)
+        private static bool ContainsProperties(object instance, object validationItem)
         {
             var validationType = validationItem.GetType();
 
@@ -136,7 +149,12 @@ namespace basic_api.Infrastructure.Database.Repositories
                 foreach (PropertyInfo property in validationProperties)
                 {
                     var instanceValue = property.GetValue(instance);
+
                     var validationValue = property.GetValue(validationItem);
+                    if (instanceValue is object)
+                    {
+                        return ContainsProperties(instanceValue, validationProperties);
+                    }
 
                     if (instanceValue == null && validationValue == null)
                         continue;
@@ -156,7 +174,7 @@ namespace basic_api.Infrastructure.Database.Repositories
         {
             var results =
                 validationItems
-                .Select(item => BaseRepository<T>.ContainsProperties(instance, item))
+                .Select(item => ContainsProperties(instance, item))
                 .ToArray();
 
             return results.Contains(true);

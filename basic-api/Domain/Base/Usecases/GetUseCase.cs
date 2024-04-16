@@ -1,4 +1,5 @@
 using basic_api.Data.Entities.Base;
+using basic_api.Data.Repositories;
 
 namespace basic_api.Domain.Base.UseCases
 {
@@ -7,6 +8,6 @@ namespace basic_api.Domain.Base.UseCases
     {
         T Execute(T input);
 
-        IEnumerable<T> Execute(IEnumerable<T> input);
+        IEnumerable<T> Execute(GetManyParams<T> input);
     }
 }

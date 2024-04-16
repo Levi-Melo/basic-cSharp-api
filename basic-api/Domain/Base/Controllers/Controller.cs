@@ -1,4 +1,5 @@
 using basic_api.Data.Entities.Base;
+using basic_api.Data.Repositories;
 
 namespace basic_api.Domain.Base.Controller
 {
@@ -7,7 +8,7 @@ namespace basic_api.Domain.Base.Controller
     {
         T Get(T input);
 
-        IEnumerable<T> Get(IEnumerable<T> input);
+        IEnumerable<T> Get(GetManyParams<T> input);
         
         T Insert(T entity);
         
