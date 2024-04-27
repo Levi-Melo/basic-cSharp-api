@@ -189,16 +189,6 @@ namespace basic_api.Infrastructure.Api.Extensions
                 serviceCollection.AddScoped<ITenantFacade, TenantFacade>();
                 serviceCollection.AddScoped<IOrderFacade, OrderFacade>();
 
-                // Controllers
-                serviceCollection.AddScoped<IAccountController, AccountController>();
-                serviceCollection.AddScoped<IBookController, BookController>();
-                serviceCollection.AddScoped<IGenreController, GenreController>();
-                serviceCollection.AddScoped<ILocationController, LocationController>();
-                serviceCollection.AddScoped<IPublisherController, PublisherController>();
-                //serviceCollection.AddScoped<IRoleController, RoleController>();
-                serviceCollection.AddScoped<IStockController, StockController>();
-                serviceCollection.AddScoped<ITenantController, TenantController>();
-                serviceCollection.AddScoped<IOrderController, OrderController>();
         }
 
     }

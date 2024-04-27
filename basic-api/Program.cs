@@ -1,18 +1,13 @@
 using basic_api.Infrastructure.Api.Extensions;
 using basic_api.Infrastructure.Api.Middlewares;
-using basic_api.Infrastructure.Database.Context;
-using Microsoft.Extensions.Configuration;
-using System.Reflection.PortableExecutable;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 builder.Services.Inject(builder.Configuration);
 
@@ -45,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
 
 app.MapControllers();
 

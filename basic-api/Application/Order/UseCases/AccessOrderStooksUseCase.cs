@@ -42,8 +42,12 @@ namespace basic_api.Application.Order.UseCases
                     throw new Exception();
                 }
             }
-
-            return await _getStock.Execute(foundOrder.StockBooks);
+            GetManyParams<StockModel> stockParams = new()
+            {
+                NotPage = true,
+                Where= foundOrder.StockBooks
+            };
+            return await _getStock.Execute(stockParams);
         }
     }
 }

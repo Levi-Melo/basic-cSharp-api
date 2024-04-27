@@ -6,20 +6,20 @@ namespace basic_api.Domain.Base.Controller
     public interface IController<T>
     where T : IBaseEntity 
     {
-        T Get(T input);
+        abstract T Get(T input);
 
-        IEnumerable<T> Get(GetManyParams<T> input);
-        
-        T Insert(T entity);
-        
-        IEnumerable<T> Insert(IEnumerable<T> entity);
+        abstract IEnumerable<T> Get(GetManyParams<T> input);
 
-        T Update(T entity);
+        abstract T Insert(T entity);
 
-        IEnumerable<T> Update(IEnumerable<T> input);
+        abstract IEnumerable<T> Insert(IEnumerable<T> entity);
 
-        void Delete(T entity);
+        abstract T Update(T entity);
 
-        void Delete(IEnumerable<T> input);
+        abstract IEnumerable<T> Update(IEnumerable<T> input);
+
+        abstract void Delete(T entity);
+
+        abstract void Delete(IEnumerable<T> input);
     }
 }

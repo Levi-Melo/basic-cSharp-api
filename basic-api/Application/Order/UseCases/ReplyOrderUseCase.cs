@@ -39,7 +39,13 @@ namespace basic_api.Application.Order.UseCases
                         Item = book,
                         Deleted = false
                     };
-                    var searchedStocks = await _getStock.Execute([stock]);
+                    GetManyParams<StockModel> stockParams = new()
+                    {
+                        NotPage = true,
+                        Where= [stock]
+                    };
+
+                    var searchedStocks = await _getStock.Execute(stockParams);
                     var invalidBook = book;
 
                     foreach (var stocked in searchedStocks)

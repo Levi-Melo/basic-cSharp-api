@@ -22,16 +22,19 @@ namespace basic_api.Application.Stock.UseCases
             var item = _getBook.Execute(bookParam);
 
             input.HaveFile = true;
-            await _fileService.DownloadAsync($"{input.Id}-{item.Title}");
+            var file = await _fileService.DownloadAsync($"{input.Id}-{item.Title}");
 
-            return base.Execute(input);
+            var result =  base.Execute(input);
+            result.File = file;
+            return result;
         }
 
 
-        new public async Task<IEnumerable<StockModel>> Execute(IEnumerable<StockModel> input)
+        new public async Task<IEnumerable<StockModel>> Execute(GetManyParams<StockModel> input)
         {
+            var items = base.Execute(input);
             var tasks = new List<Task<StockModel>>();
-            foreach (var item in input)
+            foreach (var item in items)
             {
                 tasks.Add(Execute(item));
             }
