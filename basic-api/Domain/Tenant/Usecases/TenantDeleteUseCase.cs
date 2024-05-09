@@ -1,12 +1,11 @@
-using basic_api.Data.Entities;
-using basic_api.Data.Repositories;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
 
 namespace basic_api.Domain.Tenant.UseCases
 {
     public interface ITenantDeleteUseCase
     {
-        void Execute(ITenant entity);
+        void Execute(TenantGetModel entity);
 
-        void Execute(GetManyParams<ITenant> input);
+        void Execute(IEnumerable<TenantGetModel> input);
     }
 }

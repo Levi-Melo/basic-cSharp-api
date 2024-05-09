@@ -1,39 +1,40 @@
 ﻿using basic_api.Controllers;
 using basic_api.Data.Repositories;
-using basic_api.Domain.Book.Facade;
 using basic_api.Domain.Publisher.Controllers;
 using basic_api.Domain.Publisher.Facade;
 using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace basic_api.Application.Publisher.Controllers
 {
     [ApiController]
     [Route("publishers")]
-    public class PublisherController(IPublisherFacade facade) : Controller<PublisherModel>(), IPublisherController
+    public class PublisherController(IPublisherFacade facade) : Controller<PublisherModel, PublisherGetModel, PublisherUpdateModel>(), IPublisherController
     {
         readonly IPublisherFacade _facade = facade;
 
         [HttpDelete, Route("[controller]")]
-        public override void Delete(PublisherModel entity)
+        public override void Delete(PublisherGetModel entity)
         {
             _facade.Delete(entity);
         }
 
         [HttpDelete, Route("[controller]/many")]
-        public override void Delete(IEnumerable<PublisherModel> input)
+        public override void Delete(IEnumerable<PublisherGetModel> input)
         {
             _facade.Delete(input);
         }
 
         [HttpGet, Route("[controller]")]
-        public override PublisherModel Get(PublisherModel input)
+        public override PublisherModel Get(PublisherGetModel input)
         {
             return _facade.Get(input);
         }
 
         [HttpGet, Route("[controller]/many")]
-        public override IEnumerable<PublisherModel> Get(GetManyParams<PublisherModel> input)
+        public override IEnumerable<PublisherModel> Get(GetManyParams<PublisherGetModel> input)
         {
             return _facade.Get(input);
         }
@@ -51,13 +52,13 @@ namespace basic_api.Application.Publisher.Controllers
         }
 
         [HttpPatch, Route("[controller]")]
-        public override PublisherModel Update(PublisherModel entity)
+        public override PublisherModel Update(PublisherUpdateModel entity)
         {
             return _facade.Update(entity);
         }
 
         [HttpPatch, Route("[controller]/many")]
-        public override IEnumerable<PublisherModel> Update(IEnumerable<PublisherModel> input)
+        public override IEnumerable<PublisherModel> Update(IEnumerable<PublisherUpdateModel> input)
         {
             return _facade.Update(input);
         }

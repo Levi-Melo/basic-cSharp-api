@@ -1,11 +1,12 @@
 using basic_api.Data.Entities;
+using basic_api.Infrastructure.Database.Models;
 
 namespace basic_api.Domain.Tenant.UseCases
 {
     public interface ITenantInsertUseCase
     {
-        ITenant Execute(ITenant entity);
+        TenantModel Execute(TenantModel entity);
 
-        IEnumerable<ITenant> Execute(IEnumerable<ITenant> input);
+        IEnumerable<TenantModel> Execute(IEnumerable<TenantModel> input);
     }
 }

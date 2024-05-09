@@ -1,9 +1,10 @@
-﻿using basic_api.Controllers;
-using basic_api.Data.Repositories;
+﻿using basic_api.Data.Repositories;
 using basic_api.Domain.Order.Controller;
 using basic_api.Domain.Order.Facade;
 using basic_api.Domain.Order.UseCases;
 using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
@@ -59,25 +60,25 @@ namespace basic_api.Application.Order.Controller
         }
 
         [HttpDelete, Route("[controller]")]
-        public void Delete(OrderModel entity)
+        public void Delete(OrderGetModel entity)
         {
             _facade.Delete(entity);
         }
 
         [HttpDelete, Route("[controller]/many")]
-        public  void Delete(IEnumerable<OrderModel> input)
+        public  void Delete(IEnumerable<OrderGetModel> input)
         {
             _facade.Delete(input);
         }
 
         [HttpGet, Route("[controller]")]
-        public  OrderModel Get(OrderModel input)
+        public  OrderModel Get(OrderGetModel input)
         {
             return _facade.Get(input);
         }
 
         [HttpGet, Route("[controller]/many")]
-        public  IEnumerable<OrderModel> Get(GetManyParams<OrderModel> input)
+        public  IEnumerable<OrderModel> Get(GetManyParams<OrderGetModel> input)
         {
             return _facade.Get(input);
         }
@@ -90,13 +91,13 @@ namespace basic_api.Application.Order.Controller
         }
 
         [HttpPatch, Route("[controller]")]
-        public  OrderModel Update(OrderModel entity)
+        public  OrderModel Update(OrderUpdateModel entity)
         {
             return _facade.Update(entity);
         }
 
         [HttpPatch, Route("[controller]/many")]
-        public  IEnumerable<OrderModel> Update(IEnumerable<OrderModel> input)
+        public  IEnumerable<OrderModel> Update(IEnumerable<OrderUpdateModel> input)
         {
             return _facade.Update(input);
         }

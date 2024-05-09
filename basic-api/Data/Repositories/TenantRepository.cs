@@ -1,23 +1,26 @@
 ﻿using basic_api.Data.Entities;
+using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 
 namespace basic_api.Data.Repositories
 {
     public interface ITenantRepository : IDisposable
     {
-        ITenant Get(ITenant input);
+        TenantModel Get(TenantGetModel input);
 
-        IEnumerable<ITenant> Get(GetManyParams<ITenant> input);
+        IEnumerable<TenantModel> Get(GetManyParams<TenantGetModel> input);
 
-        ITenant Insert(ITenant entity);
+        TenantModel Insert(TenantModel entity);
 
-        IEnumerable<ITenant> Insert(IEnumerable<ITenant> entity);
+        IEnumerable<TenantModel> Insert(IEnumerable<TenantModel> entity);
 
-        ITenant Update(ITenant entity);
+        TenantModel Update(TenantUpdateModel entity);
 
-        IEnumerable<ITenant> Update(IEnumerable<ITenant> input);
+        IEnumerable<TenantModel> Update(IEnumerable<TenantUpdateModel> input);
 
-        void Delete(ITenant entity);
+        void Delete(TenantGetModel entity);
 
-        void Delete(GetManyParams<ITenant> input);
+        void Delete(IEnumerable<TenantGetModel> input);
     }
 }

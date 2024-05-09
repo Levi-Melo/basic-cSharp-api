@@ -5,28 +5,31 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 namespace basic_api.Controllers
 {
-    public abstract class Controller<T> : ControllerBase, IController<T>
+    public abstract class Controller<T, G, H> : ControllerBase, IController<T, G, H>
     where T : IBaseEntity
+    where G : T
+    where H : G
+
     {
         public Controller()
         {
             AddModelValidation();
         }
-        public abstract T Get(T input);
+        public abstract T Get(G input);
 
-        public abstract IEnumerable<T> Get(GetManyParams<T> input);
+        public abstract IEnumerable<T> Get(GetManyParams<G> input);
 
         public abstract T Insert(T entity);
 
         public abstract IEnumerable<T> Insert(IEnumerable<T> entity);
 
-        public abstract T Update(T entity);
+        public abstract T Update(H entity);
 
-        public abstract IEnumerable<T> Update(IEnumerable<T> input);
+        public abstract IEnumerable<T> Update(IEnumerable<H> input);
 
-        public abstract void Delete(T entity);
+        public abstract void Delete(G entity);
 
-        public abstract void Delete(IEnumerable<T> input);
+        public abstract void Delete(IEnumerable<G> input);
 
         private void AddModelValidation()
         {

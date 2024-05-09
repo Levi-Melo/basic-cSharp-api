@@ -2,6 +2,9 @@ using basic_api.Data.Entities;
 using basic_api.Data.Repositories;
 using basic_api.Domain.Tenant.Facade;
 using basic_api.Domain.Tenant.UseCases;
+using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 
 namespace basic_api.Application.Tenant.Facade
 {
@@ -17,42 +20,42 @@ namespace basic_api.Application.Tenant.Facade
         readonly ITenantInsertUseCase _insertUseCase = insertUseCase;
         readonly ITenantUpdateUseCase _updateUseCase = updateUseCase;
 
-        public void Delete(ITenant entity)
+        public void Delete(TenantGetModel entity)
         {
             _deleteUseCase.Execute(entity);
         }
 
-        public void Delete(GetManyParams<ITenant> input)
+        public void Delete(IEnumerable<TenantGetModel> input)
         {
             _deleteUseCase.Execute(input);
         }
 
-        public ITenant Get(ITenant input)
+        public TenantModel Get(TenantGetModel input)
         {
             return _getUseCase.Execute(input);
         }
 
-        public IEnumerable<ITenant> Get(GetManyParams<ITenant> input)
+        public IEnumerable<TenantModel> Get(GetManyParams<TenantGetModel> input)
         {
             return _getUseCase.Execute(input);
         }
 
-        public ITenant Insert(ITenant entity)
+        public TenantModel Insert(TenantModel entity)
         {
             return _insertUseCase.Execute(entity);
         }
 
-        public IEnumerable<ITenant> Insert(IEnumerable<ITenant> entity)
+        public IEnumerable<TenantModel> Insert(IEnumerable<TenantModel> entity)
         {
             return _insertUseCase.Execute(entity);
         }
 
-        public ITenant Update(ITenant entity)
+        public TenantModel Update(TenantUpdateModel entity)
         {
             return _updateUseCase.Execute(entity);
         }
 
-        public IEnumerable<ITenant> Update(IEnumerable<ITenant> input)
+        public IEnumerable<TenantModel> Update(IEnumerable<TenantUpdateModel> input)
         {
             return _updateUseCase.Execute(input);
         }

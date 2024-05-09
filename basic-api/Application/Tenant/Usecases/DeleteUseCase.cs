@@ -1,6 +1,7 @@
 using basic_api.Data.Entities;
 using basic_api.Data.Repositories;
 using basic_api.Domain.Tenant.UseCases;
+using basic_api.Infrastructure.Database.Models.DTO.Get;
 
 namespace basic_api.Application.Tenant.UseCases
 {
@@ -9,12 +10,12 @@ namespace basic_api.Application.Tenant.UseCases
 
         private readonly ITenantRepository _repository = repo;
 
-        public void Execute(ITenant entity)
+        public void Execute(TenantGetModel entity)
         {
             _repository.Delete(entity);
         }
 
-        public void Execute(GetManyParams<ITenant> input)
+        public void Execute(IEnumerable<TenantGetModel> input)
         {
             _repository.Delete(input);
         }

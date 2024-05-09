@@ -1,11 +1,13 @@
 using basic_api.Data.Entities;
+using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 
 namespace basic_api.Domain.Tenant.UseCases
 {
     public interface ITenantUpdateUseCase
     {
-        ITenant Execute(ITenant entity);
+        TenantModel Execute(TenantUpdateModel entity);
 
-        IEnumerable<ITenant> Execute(IEnumerable<ITenant> input);
+        IEnumerable<TenantModel> Execute(IEnumerable<TenantUpdateModel> input);
     }
 }

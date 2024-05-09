@@ -151,7 +151,7 @@ namespace basic_api.Infrastructure.Database.Repositories
                     var instanceValue = property.GetValue(instance);
 
                     var validationValue = property.GetValue(validationItem);
-                    if (instanceValue is object)
+                    if (instanceValue is not null and object)
                     {
                         return ContainsProperties(instanceValue, validationProperties);
                     }

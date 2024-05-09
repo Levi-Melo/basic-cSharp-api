@@ -1,6 +1,7 @@
-using basic_api.Data.Entities;
 using basic_api.Data.Repositories;
 using basic_api.Domain.Tenant.UseCases;
+using basic_api.Infrastructure.Database.Models;
+using basic_api.Infrastructure.Database.Models.DTO.Update;
 
 namespace basic_api.Application.Tenant.UseCases
 {
@@ -8,12 +9,12 @@ namespace basic_api.Application.Tenant.UseCases
     {
         private readonly ITenantRepository _repository = repo;
 
-        public ITenant Execute(ITenant input)
+        public TenantModel Execute(TenantUpdateModel input)
         {
             return _repository.Update(input);
         }
 
-        public IEnumerable<ITenant> Execute(IEnumerable<ITenant> input)
+        public IEnumerable<TenantModel> Execute(IEnumerable<TenantUpdateModel> input)
         {
             return _repository.Update(input);
         }
